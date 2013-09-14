@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Nancy;
 using Nancy.ModelBinding;
 
-namespace OfxClient
+namespace OpenBank
 {
     public class OfxTransactions : NancyModule
     {

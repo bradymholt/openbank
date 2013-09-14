@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Globalization;
 
-namespace OfxClient
+namespace OpenBank
 {
     //Adapted from: http://xamlcoder.com/blog/2010/10/29/parsing-ofx-files-in-silverlight/
 

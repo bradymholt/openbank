@@ -7,7 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Configuration;
 
-namespace OfxClient
+namespace OpenBank
 {
     public class DirectFetcher : IFetchOfx
     {

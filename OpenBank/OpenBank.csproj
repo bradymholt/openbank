@@ -7,8 +7,8 @@
     <ProjectGuid>{AFC5B05C-C260-443B-8841-4C450E49B286}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfxClient</RootNamespace>
-    <AssemblyName>OfxClient</AssemblyName>
+    <RootNamespace>OpenBank</RootNamespace>
+    <AssemblyName>OpenBank</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
