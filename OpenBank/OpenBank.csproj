@@ -55,17 +55,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServiceModule\Accounts.cs" />
-    <Compile Include="DTO\OfxRequest.cs" />
-    <Compile Include="DTO\OfxTransaction.cs" />
-    <Compile Include="Fetchers\IFetchOfx.cs" />
-    <Compile Include="DTO\OfxAccount.cs" />
-    <Compile Include="ServiceModule\Transactions.cs" />
-    <Compile Include="Enum\OfxAccountTypeEnum.cs" />
-    <Compile Include="Fetchers\DirectFetcher.cs" />
-    <Compile Include="Utility\OfxParser.cs" />
+    <Compile Include="Service\Accounts.cs" />
+    <Compile Include="DTO\AccountInfo.cs" />
+    <Compile Include="DTO\AccountResponse.cs" />
+    <Compile Include="DTO\StatementBalance.cs" />
+    <Compile Include="DTO\OfxResponse.cs" />
+    <Compile Include="DTO\StatementTransaction.cs" />
+    <Compile Include="DTO\StatementResponse.cs" />
+    <Compile Include="Service\Transactions.cs" />
+    <Compile Include="DTO\AccountType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\AccountRequest.cs" />
+    <Compile Include="Request\AccountRequestParameters.cs" />
+    <Compile Include="Request\OfxRequest.cs" />
+    <Compile Include="Parse\OfxParser.cs" />
+    <Compile Include="Request\OfxRequestParameters.cs" />
+    <Compile Include="Parse\OfxResponseBuilder.cs" />
+    <Compile Include="Request\StatementRequestParameters.cs" />
+    <Compile Include="Request\StatementRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

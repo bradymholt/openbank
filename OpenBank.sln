@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBank", "OpenBank\OpenBank.csproj", "{AFC5B05C-C260-443B-8841-4C450E49B286}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenBank.Test", "OpenBank.Test\OpenBank.Test.csproj", "{FFF07A4F-663E-48CF-89E2-3A422EB2E961}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{AFC5B05C-C260-443B-8841-4C450E49B286}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFC5B05C-C260-443B-8841-4C450E49B286}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFC5B05C-C260-443B-8841-4C450E49B286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF07A4F-663E-48CF-89E2-3A422EB2E961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF07A4F-663E-48CF-89E2-3A422EB2E961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF07A4F-663E-48CF-89E2-3A422EB2E961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF07A4F-663E-48CF-89E2-3A422EB2E961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
