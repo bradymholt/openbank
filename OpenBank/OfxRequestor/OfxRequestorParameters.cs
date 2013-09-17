@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenBank
 {
-    public class OfxRequestParameters
+    public class OfxRequestorParameters
     {
         public string URL { get; set; }
         public string FID { get; set; }

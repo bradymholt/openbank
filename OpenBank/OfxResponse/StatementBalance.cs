@@ -10,7 +10,14 @@ namespace OpenBank
     /// </summary>
     public class StatementBalance
     {
-        public decimal Balance { get; set; }
+        /// <summary>
+        /// BALAMT
+        /// </summary>
+        public decimal Amount { get; set; }
+
+        /// <summary>
+        /// DTASOF
+        /// </summary>
         public DateTime AsOfDate { get; set; }
     }
 }

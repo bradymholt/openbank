@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenBank
 {
-    public class StatementRequestParameters : OfxRequestParameters
+    public class StatementParameters : OfxRequestorParameters
     {
         public string BankID { get; set; }
         public string AccountID { get; set; }

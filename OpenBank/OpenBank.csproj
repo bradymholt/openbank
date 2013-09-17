@@ -42,12 +42,22 @@
     <Reference Include="Nancy.Serialization.JsonNet">
       <HintPath>..\packages\Nancy.Serialization.JsonNet.0.20.0\lib\net40\Nancy.Serialization.JsonNet.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.20.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.configuration">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor.Unofficial, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,32 +65,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service\Accounts.cs" />
-    <Compile Include="DTO\AccountInfo.cs" />
-    <Compile Include="DTO\AccountResponse.cs" />
-    <Compile Include="DTO\StatementBalance.cs" />
-    <Compile Include="DTO\OfxResponse.cs" />
-    <Compile Include="DTO\StatementTransaction.cs" />
-    <Compile Include="DTO\StatementResponse.cs" />
-    <Compile Include="Service\Transactions.cs" />
-    <Compile Include="DTO\AccountType.cs" />
+    <Compile Include="Attributes\ParameterFormat.cs" />
+    <Compile Include="Services\AccountsService.cs" />
+    <Compile Include="OfxResponse\AccountInfo.cs" />
+    <Compile Include="OfxResponse\StatementBalance.cs" />
+    <Compile Include="OfxResponse\OfxResponse.cs" />
+    <Compile Include="OfxResponse\StatementTransaction.cs" />
+    <Compile Include="OfxResponse\StatementResponse.cs" />
+    <Compile Include="Services\DefaultService.cs" />
+    <Compile Include="Services\TransactionsService.cs" />
+    <Compile Include="OfxResponse\AccountType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request\AccountRequest.cs" />
-    <Compile Include="Request\AccountRequestParameters.cs" />
-    <Compile Include="Request\OfxRequest.cs" />
-    <Compile Include="Parse\OfxParser.cs" />
-    <Compile Include="Request\OfxRequestParameters.cs" />
-    <Compile Include="Parse\OfxResponseBuilder.cs" />
-    <Compile Include="Request\StatementRequestParameters.cs" />
-    <Compile Include="Request\StatementRequest.cs" />
+    <Compile Include="OfxRequestor\AccountInfoRequestor.cs" />
+    <Compile Include="OfxRequestor\AccountInfoParameters.cs" />
+    <Compile Include="OfxRequestor\OfxRequestor.cs" />
+    <Compile Include="OfxParse\OfxParser.cs" />
+    <Compile Include="OfxRequestor\OfxRequestorParameters.cs" />
+    <Compile Include="OfxParse\OfxResponseBuilder.cs" />
+    <Compile Include="OfxRequestor\StatementParameters.cs" />
+    <Compile Include="OfxRequestor\StatementRequestor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Views\default.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exception\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.20.0\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.20.0\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

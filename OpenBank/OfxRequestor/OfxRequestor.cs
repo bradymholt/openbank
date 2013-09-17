@@ -10,11 +10,11 @@ using System.Xml.Linq;
 
 namespace OpenBank
 {
-    public abstract class OfxRequest
+    public abstract class OfxRequestor
     {
-        private OfxRequestParameters m_parameters;
+        private OfxRequestorParameters m_parameters;
 
-        public OfxRequest(OfxRequestParameters parameters)
+        public OfxRequestor(OfxRequestorParameters parameters)
         {
             m_parameters = parameters;
         }

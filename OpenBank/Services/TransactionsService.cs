@@ -8,15 +8,15 @@ using Nancy.ModelBinding;
 
 namespace OpenBank
 {
-    public class Transactions : NancyModule
+    public class TransactionsService : NancyModule
     {
-        public Transactions()
+        public TransactionsService()
         {
             Post["/transactions"] = parameters =>
             {
                 var request = this.Bind<Parameters>();
 
-                StatementRequestParameters requestParameters = new StatementRequestParameters()
+                StatementParameters requestParameters = new StatementParameters()
                 {
                     URL = request.url,
                     FID = request.fid,
@@ -30,7 +30,7 @@ namespace OpenBank
                     DateEnd = request.date_end
                 };
 
-                var fetcher = new StatementRequest(requestParameters);
+                var fetcher = new StatementRequestor(requestParameters);
                 OfxResponse ofx = fetcher.FetchOfx();
                 return ofx.Statement;
             };
@@ -48,7 +48,10 @@ namespace OpenBank
             public string account_id { get; set; }
             public AccountType type { get; set; }
 
+            [ParameterFormat("YYYYMMDD")]
             public DateTime date_start { get; set; }
+
+            [ParameterFormat("YYYYMMDD")]
             public DateTime date_end { get; set; }
 
         }

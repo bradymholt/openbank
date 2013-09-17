@@ -12,13 +12,17 @@ namespace OpenBank
         static void Main(string[] args)
         {
             Console.WriteLine("--Welcome to OpenBank--");
+            Console.WriteLine();
 
             string port = ConfigurationManager.AppSettings["service_port"];
             using (var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri(string.Concat("http://localhost:", port))))
             {
+                Console.Write("Starting up...");
                 nancyHost.Start();
-
-                Console.WriteLine(string.Format("Server listening on port {0}.  Waiting for connections...", port));
+                Console.WriteLine("success!");
+                
+                Console.WriteLine(string.Format("Server listening on port {0} and waiting for connections.", port));
+                Console.WriteLine(string.Format("Navigate to http://localhost:{0}/ for help.", port));
 
                 Wait();
                 
@@ -36,6 +40,7 @@ namespace OpenBank
             }
             else
             {
+                Console.WriteLine();
                 Console.WriteLine("[Press any key to exit]");
                 Console.ReadLine();
             }

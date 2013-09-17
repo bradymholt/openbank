@@ -5,11 +5,11 @@ using System.Text;
 
 namespace OpenBank
 {
-    public class AccountRequest : OfxRequest
+    public class AccountInfoRequestor : OfxRequestor
     {
-        AccountRequestParameters m_parameters;
+        AccountInfoRequestParameters m_parameters;
 
-        public AccountRequest(AccountRequestParameters parameters)
+        public AccountInfoRequestor(AccountInfoRequestParameters parameters)
             :base(parameters)
         {
             m_parameters = parameters;

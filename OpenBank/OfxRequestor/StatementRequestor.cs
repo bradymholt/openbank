@@ -5,10 +5,10 @@ using System.Text;
 
 namespace OpenBank
 {
-    public class StatementRequest : OfxRequest
+    public class StatementRequestor : OfxRequestor
     {
-        private StatementRequestParameters m_parameters;
-        public StatementRequest(StatementRequestParameters parameters)
+        private StatementParameters m_parameters;
+        public StatementRequestor(StatementParameters parameters)
             :base (parameters)
         {
             m_parameters = parameters;

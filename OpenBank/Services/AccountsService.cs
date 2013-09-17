@@ -8,14 +8,14 @@ using Nancy.ModelBinding;
 
 namespace OpenBank
 {
-    public class Accounts : NancyModule
+    public class AccountsService : NancyModule
     {
-        public Accounts()
+        public AccountsService()
         {
-            Get["/accounts"] = parameters =>
+            Post["/accounts"] = parameters =>
             {
                 var request = this.Bind<Parameters>();
-                AccountRequestParameters requestParameters = new AccountRequestParameters()
+                AccountInfoRequestParameters requestParameters = new AccountInfoRequestParameters()
                 {
                     URL = request.url,
                     FID = request.fid,
@@ -24,14 +24,15 @@ namespace OpenBank
                     Password = request.password
                 };
 
-                var fetcher = new AccountRequest(requestParameters);
+                var fetcher = new AccountInfoRequestor(requestParameters);
                 OfxResponse ofx = fetcher.FetchOfx();
-                return ofx.Account.Accounts;
+                return ofx.Accounts;
             };
         }
 
         public class Parameters
         {
+            [ParameterFormat("http://url.com/service")]
             public string url { get; set; }
             public string fid { get; set; }
             public string org { get; set; }

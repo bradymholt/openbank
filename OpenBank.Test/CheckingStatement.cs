@@ -13,7 +13,7 @@ namespace OpenBank.Test
             string raw = File.ReadAllText("files\\BANKMSGSRSV1.ofx");
             OfxParser parser = new OfxParser();
             OfxResponse response = parser.Parse(raw);
-            Assert.AreEqual(2703.71M, response.Statement.LedgerBalance.Balance);
+            Assert.AreEqual(2703.71M, response.Statement.LedgerBalance.Amount);
             
         }
     }

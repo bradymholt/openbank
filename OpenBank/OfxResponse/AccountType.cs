@@ -6,10 +6,15 @@ using System.Text;
 namespace OpenBank
 {
     /// <summary>
-    /// ACCTINFORS
+    /// ACCTTYPE
     /// </summary>
-    public class AccountResponse
+    public enum AccountType : int
     {
-        public List<AccountInfo> Accounts { get; set; }
+        CHECKING,
+        SAVING,
+        MONEYMRKT,
+        CREDITCARD,
+        OTHER,
+        ACCOUNTS
     }
 }

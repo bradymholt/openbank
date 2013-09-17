@@ -16,16 +16,14 @@ namespace OpenBank
             var accounts = parsedOfx.Element("ACCTINFORS");
             if (accounts != null)
             {
-                ofx.Account = new AccountResponse();
-                ofx.Account.Accounts =
+                ofx.Accounts =
                 (from c in parsedOfx.Descendants("ACCTINFO")
                  select new AccountInfo
                  {
                      BankID = c.Element("BANKID").Value,
                      AccountID = c.Element("ACCTID").Value,
                      AccountType = c.Element("ACCTTYPE").Value,
-                     Description = c.Element("DESC").Value,
-                     Status = c.Element("SVCSTATUS").Value
+                     Description = c.Element("DESC").Value
                  }).ToList();
             }
 
@@ -75,8 +73,8 @@ namespace OpenBank
                     }
                 }
 
-                ofx.Statement.LedgerBalance = new StatementBalance() { Balance = ledgerBalanceAmount.Value, AsOfDate = ledgerBalanceDate.Value };
-                ofx.Statement.AvailableBalance = new StatementBalance() { Balance = availBalanceAmount.Value, AsOfDate = availBalanceDate.Value };
+                ofx.Statement.LedgerBalance = new StatementBalance() { Amount = ledgerBalanceAmount.Value, AsOfDate = ledgerBalanceDate.Value };
+                ofx.Statement.AvailableBalance = new StatementBalance() { Amount = availBalanceAmount.Value, AsOfDate = availBalanceDate.Value };
 
                 ofx.Statement.Transactions =
                     (from c in parsedOfx.Descendants("STMTTRN")
