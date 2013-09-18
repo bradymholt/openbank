@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace OpenBank.Test
 {
-    [TestClass]
+	[TestFixture()]
     public class ServiceParameterParsingHelperTest
     {
-        [TestMethod]
+        [Test]
         public void ParseDateParameterValid()
         {
             string validDate = "20130901";
@@ -15,7 +15,7 @@ namespace OpenBank.Test
             Assert.AreEqual(validDate, parsedDate.ToString("yyyyMMdd"));
         }
 
-        [TestMethod]
+        [Test]
         public void ParseDateParameterInvalid()
         {
             string validDate = "2011";

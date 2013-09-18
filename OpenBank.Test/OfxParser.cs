@@ -1,26 +1,26 @@
 ﻿using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace OpenBank.Test
 {
-    [TestClass]
+	[TestFixture()]
     public class OfxParserTest
     {
-        [TestMethod]
+        [Test]
         public void ParseStatement()
         {
-            string raw = File.ReadAllText("files\\BANKMSGSRSV1.ofx");
+            string raw = File.ReadAllText("files/BANKMSGSRSV1.ofx");
             OfxParser parser = new OfxParser();
             OfxResponse response = parser.Parse(raw);
             Assert.AreEqual(2703.71M, response.statement.ledger_balance.amount);
             
         }
 
-        [TestMethod]
+        [Test]
         public void ParseOfx()
         {
-            string raw = File.ReadAllText("files\\ACCTINFORS.ofx");
+            string raw = File.ReadAllText("files/ACCTINFORS.ofx");
             OfxParser parser = new OfxParser();
             OfxResponse response = parser.Parse(raw);
             Assert.AreEqual("CHECKING", response.accounts[0].account_type);
