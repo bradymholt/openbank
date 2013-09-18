@@ -4,3 +4,5 @@ packages
 *.csproj.user
 /deploy
 TestResults
+test-results
+*.suo
