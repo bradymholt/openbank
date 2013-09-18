@@ -11,7 +11,6 @@ namespace OpenBank
         public string AccountID { get; set; }
         public AccountType AccountType { get; set; }
 
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
+        public DateTime DateFrom { get; set; }
     }
 }

@@ -53,8 +53,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CheckingStatement.cs" />
-    <Compile Include="AccountList.cs" />
+    <Compile Include="OfxParser.cs" />
+    <Compile Include="ServiceParameterParsingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

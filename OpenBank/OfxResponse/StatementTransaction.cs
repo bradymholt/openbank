@@ -13,26 +13,26 @@ namespace OpenBank
         /// <summary>
         /// FITID
         /// </summary>
-        public string ID { get; set; }
+        public string id { get; set; }
 
         /// <summary>
         /// NAME
         /// </summary>
-        public string Name { get; set; }
+        public string name { get; set; }
 
         /// <summary>
         /// TRNTYPE
         /// </summary>
-        public string Type { get; set; }
+        public string type { get; set; }
 
         /// <summary>
         /// DTPOSTED
         /// </summary>
-        public DateTime? DatePosted { get; set; }
+        public DateTime? date { get; set; }
 
         /// <summary>
         /// TRNAMT
         /// </summary>
-        public decimal? Amount { get; set; }
+        public decimal? amount { get; set; }
     }
 }

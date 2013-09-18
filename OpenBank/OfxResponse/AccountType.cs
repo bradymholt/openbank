@@ -14,7 +14,6 @@ namespace OpenBank
         SAVING,
         MONEYMRKT,
         CREDITCARD,
-        OTHER,
-        ACCOUNTS
+        OTHER
     }
 }

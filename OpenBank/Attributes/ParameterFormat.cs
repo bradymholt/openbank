@@ -7,7 +7,10 @@ namespace OpenBank
 {
     public class ParameterFormat : Attribute
     {
+        public ParameterFormat() { }
+
         public ParameterFormat(string format)
+            :this()
         {
             this.Format = format;
         }

@@ -13,11 +13,21 @@ namespace OpenBank
         /// <summary>
         /// ACCTINFOTRNRS
         /// </summary>
-        public List<AccountInfo> Accounts { get; set; }
+        public List<AccountInfo> accounts { get; set; }
 
         /// <summary>
         /// BANKMSGSRSV1, CREDITCARDMSGSRSV1
         /// </summary>
-        public StatementResponse Statement { get; set; }
+        public StatementResponse statement { get; set; }
+
+        public int? ofx_response_status_code { get; set; }
+        public string ofx_error_message { get; set; }
+
+        public bool is_error
+        {
+            get { 
+                return this.ofx_response_status_code.HasValue && !this.ofx_response_status_code.ToString().StartsWith("2"); 
+            }
+        }
     }
 }

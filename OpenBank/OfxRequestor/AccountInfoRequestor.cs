@@ -26,7 +26,7 @@ namespace OpenBank
           + "  </ACCTINFOTRNRQ>\n"
           + " </SIGNUPMSGSRQV1>";
 
-        protected override string BuildInnerRequest()
+        protected override string BuildRequestInnerBody()
         {
             string request = string.Format(OFX_ACCOUNT_LIST_REQUEST, GenerateRandomString(8));
             return request;

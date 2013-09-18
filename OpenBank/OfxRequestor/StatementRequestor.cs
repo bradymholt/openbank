@@ -50,7 +50,7 @@ namespace OpenBank
             + "  </CCSTMTTRNRQ>\n"
             + " </CREDITCARDMSGSRQV1>";
 
-        protected override string BuildInnerRequest()
+        protected override string BuildRequestInnerBody()
         {
             string request = string.Empty;
             switch (m_parameters.AccountType)
@@ -60,7 +60,7 @@ namespace OpenBank
                         GenerateRandomString(8),
                         GenerateRandomString(5),
                         m_parameters.AccountID,
-                        m_parameters.DateStart.ToString("yyyyMMddHHmmss.fff")); //UTC
+                        m_parameters.DateFrom.ToString("yyyyMMddHHmmss.fff")); //UTC
                     break;
                 default:
                     request = string.Format(BANKING_STATEMENT_REQUEST,
@@ -69,7 +69,7 @@ namespace OpenBank
                         m_parameters.BankID,
                         m_parameters.AccountID,
                         m_parameters.AccountType.ToString(),
-                        m_parameters.DateStart.ToString("yyyyMMddHHmmss.fff")); //UTC
+                        m_parameters.DateFrom.ToString("yyyyMMddHHmmss.fff")); //UTC
                     break;
 
             }

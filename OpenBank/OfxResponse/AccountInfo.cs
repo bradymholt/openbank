@@ -13,21 +13,21 @@ namespace OpenBank
         /// <summary>
         /// DESC
         /// </summary>
-        public string Description { get; set; }
+        public string description { get; set; }
 
         /// <summary>
         /// BANKID
         /// </summary>
-        public string BankID { get; set; }
+        public string bank_id { get; set; }
 
         /// <summary>
         /// ACCTID
         /// </summary>
-        public string AccountID { get; set; }
+        public string account_id { get; set; }
 
         /// <summary>
         /// ACCTTYPE
         /// </summary>
-        public string AccountType { get; set; }
+        public string account_type { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ using Nancy.ModelBinding;
 
 namespace OpenBank
 {
-    public class TransactionsService : NancyModule
+    public class StatementService : NancyModule
     {
-        public TransactionsService()
+        public StatementService()
         {
             Post["/transactions"] = parameters =>
             {
@@ -25,14 +26,21 @@ namespace OpenBank
                     Password = request.password,
                     AccountID = request.account_id,
                     BankID = request.bank_id,
-                    AccountType = request.type,
-                    DateStart = request.date_start,
-                    DateEnd = request.date_end
+                    AccountType = request.account_type,
+                    DateFrom = ServiceParameterParsingHelper.GetDateParameter(request.date_from)
                 };
 
                 var fetcher = new StatementRequestor(requestParameters);
                 OfxResponse ofx = fetcher.FetchOfx();
-                return ofx.Statement;
+
+                if (!ofx.is_error)
+                {
+                    return ofx.statement;
+                }
+                else
+                {
+                    return ofx.ofx_error_message;
+                }
             };
         }
 
@@ -46,14 +54,12 @@ namespace OpenBank
 
             public string bank_id { get; set; }
             public string account_id { get; set; }
-            public AccountType type { get; set; }
+
+            [AccountTypeFormat]
+            public AccountType account_type { get; set; }
 
             [ParameterFormat("YYYYMMDD")]
-            public DateTime date_start { get; set; }
-
-            [ParameterFormat("YYYYMMDD")]
-            public DateTime date_end { get; set; }
-
+            public string date_from { get; set; }
         }
     }
 }

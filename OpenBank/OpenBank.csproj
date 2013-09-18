@@ -65,15 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AccountTypeFormat.cs" />
     <Compile Include="Attributes\ParameterFormat.cs" />
-    <Compile Include="Services\AccountsService.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="OfxResponse\AccountInfo.cs" />
     <Compile Include="OfxResponse\StatementBalance.cs" />
     <Compile Include="OfxResponse\OfxResponse.cs" />
     <Compile Include="OfxResponse\StatementTransaction.cs" />
     <Compile Include="OfxResponse\StatementResponse.cs" />
+    <Compile Include="Services\Bootstrap.cs" />
     <Compile Include="Services\DefaultService.cs" />
-    <Compile Include="Services\TransactionsService.cs" />
+    <Compile Include="Services\StatementService.cs" />
     <Compile Include="OfxResponse\AccountType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="OfxParse\OfxResponseBuilder.cs" />
     <Compile Include="OfxRequestor\StatementParameters.cs" />
     <Compile Include="OfxRequestor\StatementRequestor.cs" />
+    <Compile Include="Utility\ServiceParameterParsingHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -24,8 +24,16 @@ namespace OpenBank
 
         public string RequestBody { get; protected set; }
         public string ResponseBody { get; protected set; }
-        public HttpWebResponse Response { get; set; }
-       
+        public int ResponseStatusCode { get; set; }
+
+        public bool IsError
+        {
+            get
+            {
+                return !this.ResponseStatusCode.ToString().StartsWith("2"); //2xx means success
+            }
+        }
+
         private const string OFX_REQUEST =
               "OFXHEADER:100\n"
             + "DATA:OFXSGML\n"
@@ -56,60 +64,95 @@ namespace OpenBank
 
         public OfxResponse FetchOfx()
         {
-            this.GetResponse();
+            this.ExecuteRequest();
 
-            OfxParser parser = new OfxParser();
-            OfxResponse ofxResponse = parser.Parse(this.ResponseBody);
+            OfxResponse ofxResponse = null;
+
+            if (!this.IsError)
+            {
+                OfxParser parser = new OfxParser();
+                ofxResponse = parser.Parse(this.ResponseBody);
+            }
+            else
+            {
+                ofxResponse = new OfxResponse() { ofx_error_message = this.ResponseBody };
+            }
+
+            ofxResponse.ofx_response_status_code = this.ResponseStatusCode;
 
             return ofxResponse;
         }
 
-        public string GetResponse()
+        public string ExecuteRequest()
         {
-            this.RequestBody = BuildRequestBody();
+            this.RequestBody = BuildRequestOuterBody();
             this.ResponseBody = SendRequestGetResponse(m_parameters.URL, this.RequestBody);
             return this.ResponseBody;
         }
 
-        private string SendRequestGetResponse(string url, string request)
+        public string SendRequestGetResponse(string url, string requestBody)
         {
+            string responseBody = string.Empty;
+
             System.Net.ServicePointManager.Expect100Continue = false; //otherwise 'Expect: 100-continue' header is added to request
 
-            WebRequest webRequest = WebRequest.Create(url);
-            webRequest.ContentType = "application/x-ofx";
-            webRequest.Method = "POST";
-
-            string proxyUrl = ConfigurationManager.AppSettings["proxy_url"];
-            if (!string.IsNullOrEmpty(proxyUrl))
+            try
             {
-                WebProxy proxy = new WebProxy(proxyUrl);
-                proxy.UseDefaultCredentials = true;
-                webRequest.Proxy = proxy;
+                WebRequest webRequest = WebRequest.Create(url);
+                webRequest.ContentType = "application/x-ofx";
+                webRequest.Method = "POST";
+
+                string proxyUrl = ConfigurationManager.AppSettings["proxy_url"];
+                if (!string.IsNullOrEmpty(proxyUrl))
+                {
+                    WebProxy proxy = new WebProxy(proxyUrl);
+                    proxy.UseDefaultCredentials = true;
+                    webRequest.Proxy = proxy;
+                }
+
+                byte[] contentBytes = Encoding.ASCII.GetBytes(requestBody);
+                webRequest.ContentLength = contentBytes.Length;
+
+                using (Stream os = webRequest.GetRequestStream())
+                {
+                    os.Write(contentBytes, 0, contentBytes.Length);
+                }
+
+
+
+
+                HttpWebResponse httpResponse = (HttpWebResponse)webRequest.GetResponse();
+                this.ResponseStatusCode = ((int)httpResponse.StatusCode);
+
+                if (httpResponse != null)
+                {
+                    StreamReader sr = new StreamReader(httpResponse.GetResponseStream());
+                    responseBody = sr.ReadToEnd();
+                }
             }
-
-            byte[] contentBytes = Encoding.ASCII.GetBytes(request);
-            webRequest.ContentLength = contentBytes.Length;
-
-            using (Stream os = webRequest.GetRequestStream())
+            catch (WebException e)
             {
-                os.Write(contentBytes, 0, contentBytes.Length);
+                using (WebResponse response = e.Response)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)response;
+                    this.ResponseStatusCode = ((int)httpResponse.StatusCode);
+
+                    using (Stream data = response.GetResponseStream())
+                    using (var reader = new StreamReader(data))
+                    {
+                        responseBody = reader.ReadToEnd();
+                    }
+                }
             }
-
-            HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
-
-            string responseBody = string.Empty; 
-            if (webResponse != null)
+            catch (Exception ex)
             {
-                StreamReader sr = new StreamReader(webResponse.GetResponseStream());
-                responseBody = sr.ReadToEnd();
+                responseBody = ex.Message;
             }
-
-            this.Response = webResponse;
 
             return responseBody;
         }
 
-        protected string BuildRequestBody()
+        protected string BuildRequestOuterBody()
         {
             string requestBody = string.Format(OFX_REQUEST,
                 GenerateRandomString(IDENTIFIER_CHARS, 32),
@@ -118,12 +161,12 @@ namespace OpenBank
                 m_parameters.Password,
                 m_parameters.ORG,
                 m_parameters.FID,
-                BuildInnerRequest());
+                BuildRequestInnerBody());
 
             return requestBody;
         }
 
-        protected abstract string BuildInnerRequest();
+        protected abstract string BuildRequestInnerBody();
 
         protected string GenerateRandomString(int length)
         {

@@ -28,7 +28,7 @@ namespace OpenBank.Service
             {
                 get
                 {
-                    return GenerateParametersDescription(typeof(AccountsService.Parameters));
+                    return GenerateParametersDescription(typeof(AccountService.Parameters));
                 }
             }
 
@@ -36,7 +36,7 @@ namespace OpenBank.Service
             {
                 get
                 {
-                    return GenerateParametersDescription(typeof(TransactionsService.Parameters));
+                    return GenerateParametersDescription(typeof(StatementService.Parameters));
                 }
             }
 

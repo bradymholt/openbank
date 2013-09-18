@@ -16,21 +16,21 @@ namespace OpenBank
             var accounts = parsedOfx.Element("ACCTINFORS");
             if (accounts != null)
             {
-                ofx.Accounts =
+                ofx.accounts =
                 (from c in parsedOfx.Descendants("ACCTINFO")
                  select new AccountInfo
                  {
-                     BankID = c.Element("BANKID").Value,
-                     AccountID = c.Element("ACCTID").Value,
-                     AccountType = c.Element("ACCTTYPE").Value,
-                     Description = c.Element("DESC").Value
+                     bank_id = c.Element("BANKID").Value,
+                     account_id = c.Element("ACCTID").Value,
+                     account_type = c.Element("ACCTTYPE").Value,
+                     description = c.Element("DESC").Value
                  }).ToList();
             }
 
             var transactions = parsedOfx.Element("BANKTRANLIST");
             if (transactions != null)
             {
-                ofx.Statement = new StatementResponse();
+                ofx.statement = new StatementResponse();
 
                 var accountID = parsedOfx.Element("ACCTID");
                 var accountType = parsedOfx.Element("ACCTTYPE");
@@ -73,22 +73,22 @@ namespace OpenBank
                     }
                 }
 
-                ofx.Statement.LedgerBalance = new StatementBalance() { Amount = ledgerBalanceAmount.Value, AsOfDate = ledgerBalanceDate.Value };
-                ofx.Statement.AvailableBalance = new StatementBalance() { Amount = availBalanceAmount.Value, AsOfDate = availBalanceDate.Value };
+                ofx.statement.ledger_balance = new StatementBalance() { amount = ledgerBalanceAmount.Value, date = ledgerBalanceDate.Value };
+                ofx.statement.available_balance = new StatementBalance() { amount = availBalanceAmount.Value, date = availBalanceDate.Value };
 
-                ofx.Statement.Transactions =
+                ofx.statement.transactions =
                     (from c in parsedOfx.Descendants("STMTTRN")
                      let name = ExtractAndScrubElementText(c.Element("NAME"))
                      let memo = ExtractAndScrubElementText(c.Element("MEMO"))
                      select new StatementTransaction
                      {
-                         ID = c.Element("FITID").Value,
-                         Type = c.Element("TRNTYPE").Value,
-                         DatePosted = ConvertDateTimeToUTC(c.Element("DTPOSTED").Value),
-                         Amount = decimal.Parse(
+                         id = c.Element("FITID").Value,
+                         type = c.Element("TRNTYPE").Value,
+                         date = ConvertDateTimeToUTC(c.Element("DTPOSTED").Value),
+                         amount = decimal.Parse(
                                          c.Element("TRNAMT").Value,
                                          NumberFormatInfo.InvariantInfo),
-                         Name = name
+                         name = name
                      }).ToList();
             }
 

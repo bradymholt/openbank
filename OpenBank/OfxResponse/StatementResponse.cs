@@ -13,16 +13,16 @@ namespace OpenBank
         /// <summary>
         /// LEDGERBAL
         /// </summary>
-        public StatementBalance LedgerBalance { get; set; }
+        public StatementBalance ledger_balance { get; set; }
 
         /// <summary>
         /// AVAILBAL
         /// </summary>
-        public StatementBalance AvailableBalance { get; set; }
+        public StatementBalance available_balance { get; set; }
 
         /// <summary>
         /// BANKTRANLIST
         /// </summary>
-        public List<StatementTransaction> Transactions { get; set; }
+        public List<StatementTransaction> transactions { get; set; }
     }
 }

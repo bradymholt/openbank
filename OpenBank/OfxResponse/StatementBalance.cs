@@ -13,11 +13,11 @@ namespace OpenBank
         /// <summary>
         /// BALAMT
         /// </summary>
-        public decimal Amount { get; set; }
+        public decimal amount { get; set; }
 
         /// <summary>
         /// DTASOF
         /// </summary>
-        public DateTime AsOfDate { get; set; }
+        public DateTime date { get; set; }
     }
 }

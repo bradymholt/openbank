@@ -8,9 +8,9 @@ using Nancy.ModelBinding;
 
 namespace OpenBank
 {
-    public class AccountsService : NancyModule
+    public class AccountService : NancyModule
     {
-        public AccountsService()
+        public AccountService()
         {
             Post["/accounts"] = parameters =>
             {
@@ -26,7 +26,15 @@ namespace OpenBank
 
                 var fetcher = new AccountInfoRequestor(requestParameters);
                 OfxResponse ofx = fetcher.FetchOfx();
-                return ofx.Accounts;
+
+                if (!ofx.is_error)
+                {
+                    return ofx.accounts;
+                }
+                else
+                {
+                    return ofx.ofx_error_message;
+                }
             };
         }
 
