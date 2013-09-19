@@ -1,4 +1,4 @@
 OpenBank
 ========
 
-A friendly REST wrapper for OFX Servers.
+A friendly REST service wrapper for OFX Servers.
