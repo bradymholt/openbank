@@ -37,7 +37,7 @@ namespace OpenBank.Service.Module
 					return fetcher.Response;
 				}
 				else{
-					return Response.AsJson (fetcher.Response, (HttpStatusCode)((OfxAssimilate.OfxResponseError)fetcher.Response).http_status_code);
+					return Response.AsJson (fetcher.Response, (HttpStatusCode)fetcher.Response.HttpStatus);
 				}
             };
         }
