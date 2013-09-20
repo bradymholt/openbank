@@ -13,11 +13,13 @@ namespace OpenBank
         {
             Console.WriteLine("--Welcome to OpenBank--");
             Console.WriteLine();
+			Console.Write("Starting up...");
 
-            string port = ConfigurationManager.AppSettings["service_port"];
+			System.Net.ServicePointManager.ServerCertificateValidationCallback = CertificateValidator;
+
+			string port = ConfigurationManager.AppSettings["port"];
             using (var nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri(string.Concat("http://localhost:", port))))
             {
-                Console.Write("Starting up...");
                 nancyHost.Start();
                 Console.WriteLine("success!");
                 
@@ -45,5 +47,14 @@ namespace OpenBank
                 Console.ReadLine();
             }
         }
+
+		public static bool CertificateValidator(object sender,
+		                                        System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+		                                        System.Security.Cryptography.X509Certificates.X509Chain chain,
+		                                        System.Net.Security.SslPolicyErrors sslPolicyErrors)
+		{
+			//trust all certificates; needed for Mono compatibility
+			return true;
+		}
     }
 }

@@ -33,10 +33,13 @@
     <Reference Include="nunit.framework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OfxParser.cs" />
-    <Compile Include="ServiceParameterParsingHelper.cs" />
+    <Compile Include="OfxToXmlParser.cs" />
+    <Compile Include="ParameterHelper.cs" />
+    <Compile Include="OfxFetcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

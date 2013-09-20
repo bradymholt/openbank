@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# openbank        Startup script for the openbank server daemon
+#
+# chkconfig:   2345 85 15
+# description: openbank server
+# processname: openbank
+
+daemon_name=openbank
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/mono/bin/
+NAME=openbank
+DAEMON_PATH="/home/bude/openbank"
+DAEMON_BIN="OpenBank.exe"
+DAEMON="$DAEMON_PATH/$DAEMON_BIN"
+PID_PATH="/var/run/openbank.pid"
+USER=bude
+MONO=$(which mono)
+PID=$(cat $PID_PATH)
+
+case "$1" in
+	start)
+              	echo "Starting ${NAME}"
+                if [ -z "${PID}" ]; then
+                        runuser -l ${USER} -c "${MONO} ${DAEMON} &> /dev/null & echo \$! > ${DAEMON_PATH}/openbank.pid"
+						cp ${DAEMON_PATH}/openbank.pid ${PID_PATH}
+						rm ${DAEMON_PATH}/openbank.pid
+                        echo "${NAME} was started."
+                        exit 0
+                else
+                    	echo "${NAME} is already running!"
+                        exit 1
+                fi
+        ;;
+	stop)
+             	echo "Stopping ${NAME}"
+                if [ -n "${PID}" ]; then
+                        kill -9 ${PID}
+                        rm ${PID_PATH}
+                        echo "${NAME} (${PID}) was stopped."
+                        exit 0
+                else
+                    	echo "${NAME} is not running"
+                        exit 1
+                fi
+        ;;
+        restart)
+                $0 stop
+                sleep 1
+                $0 start
+                exit 0
+        ;;
+	*)
+         echo "usage: $0 {start|stop|restart}"
+         return 2
+     esac
+exit 0
+

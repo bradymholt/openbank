@@ -63,29 +63,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\AccountTypeFormat.cs" />
-    <Compile Include="Attributes\ParameterFormat.cs" />
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="OfxResponse\AccountInfo.cs" />
-    <Compile Include="OfxResponse\StatementBalance.cs" />
-    <Compile Include="OfxResponse\OfxResponse.cs" />
-    <Compile Include="OfxResponse\StatementTransaction.cs" />
-    <Compile Include="OfxResponse\StatementResponse.cs" />
-    <Compile Include="Services\Bootstrap.cs" />
-    <Compile Include="Services\DefaultService.cs" />
-    <Compile Include="Services\StatementService.cs" />
-    <Compile Include="OfxResponse\AccountType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OfxRequestor\AccountInfoRequestor.cs" />
-    <Compile Include="OfxRequestor\AccountInfoParameters.cs" />
-    <Compile Include="OfxRequestor\OfxRequestor.cs" />
-    <Compile Include="OfxParse\OfxParser.cs" />
-    <Compile Include="OfxRequestor\OfxRequestorParameters.cs" />
     <Compile Include="OfxParse\OfxResponseBuilder.cs" />
-    <Compile Include="OfxRequestor\StatementParameters.cs" />
-    <Compile Include="OfxRequestor\StatementRequestor.cs" />
-    <Compile Include="Utility\ServiceParameterParsingHelper.cs" />
+    <Compile Include="OfxData\OfxAccountType.cs" />
+    <Compile Include="OfxData\OfxStatement.cs" />
+    <Compile Include="OfxData\OfxStatementBalance.cs" />
+    <Compile Include="OfxData\OfxStatementTransaction.cs" />
+    <Compile Include="OfxData\Status.cs" />
+    <Compile Include="Service\DiagnosticsConfigBootstrapper.cs" />
+    <Compile Include="Service\ParameterHelper.cs" />
+    <Compile Include="Service\ParameterFormat.cs" />
+    <Compile Include="Service\ParameterValues.cs" />
+    <Compile Include="Service\AccountTypeValues.cs" />
+    <Compile Include="Service\Modules\Accounts.cs" />
+    <Compile Include="Service\Modules\Statement.cs" />
+    <Compile Include="Service\Modules\Default.cs" />
+    <Compile Include="OfxData\OfxAccount.cs" />
+    <Compile Include="OfxAssimilate\OfxResponse.cs" />
+    <Compile Include="OfxAssimilate\Statement\StatementParameters.cs" />
+    <Compile Include="OfxAssimilate\Statement\StatementResponse.cs" />
+    <Compile Include="OfxAssimilate\OfxToXmlParser.cs" />
+    <Compile Include="OfxAssimilate\Statement\StatementFetcher.cs" />
+    <Compile Include="OfxAssimilate\Accounts\AccountsFetcher.cs" />
+    <Compile Include="OfxAssimilate\Accounts\AccountsParameters.cs" />
+    <Compile Include="OfxAssimilate\Accounts\AccountsResponse.cs" />
+    <Compile Include="OfxAssimilate\OfxFetcher.cs" />
+    <Compile Include="OfxAssimilate\OfxFetchParameters.cs" />
+    <Compile Include="OfxAssimilate\Exception\OfxParseException.cs" />
+    <Compile Include="OfxAssimilate\OfxResponseError.cs" />
+    <Compile Include="OfxAssimilate\Exception\ParametersMissingException.cs" />
+    <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -98,15 +106,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Exception\" />
+    <Folder Include="OfxData\" />
+    <Folder Include="Service\Modules\" />
+    <Folder Include="OfxAssimilate\Statement\" />
+    <Folder Include="OfxAssimilate\Accounts\" />
+    <Folder Include="OfxAssimilate\Exception\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-if $(ConfigurationName) == Debug (
-xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.20.0\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
-xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.20.0\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
-)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

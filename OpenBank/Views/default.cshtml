@@ -1,37 +1,39 @@
 ﻿<!DOCTYPE>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>OpenBank</title>
+    <title>OpenBank - A friendly REST service wrapper for OFX Servers.</title>
 </head>
 <body>
 
     <h1>OpenBank</h1>
-    <p>A friendly REST wrapper for OFX Servers.</p>
-    <h2>Services</h2>
-    <table border="1" cellpadding="3" cellspacing="3">
+    <p>A friendly REST service wrapper for OFX Servers.</p>
+    <h2>Resources</h2>
+    <table border="1" cellpadding="5" cellspacing="3">
         <tr>
-            <th>Service</th>
-            <th>Location</th>
-            <th>Parameters</th>
+            <th>Description</th>
+            <th>HTTP Location</th>
+            <th>Required Parameters</th>
         </tr>
         <tr style="vertical-align:top;">
-            <td><strong>Accounts</strong><br />Get a list of accounts.</td>
-            <td><strong>POST</strong> http://localhost:@Model.ServicePort/accounts</td>
+        	<td><strong>Accounts</strong> - Returns a list of available accounts.</td>
+        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/accounts</td>
             <td>@Html.Raw(Model.AccountsServiceParameters)</td>
         </tr>
         <tr style="vertical-align:top;">
-            <td><strong>Transactions</strong><br />Get transactions for a single account.</td>
-            <td><strong>POST</strong> http://localhost:@Model.ServicePort/transactions</td>
+        	<td><strong>Statement</strong> - Returns a statement for a single account, by date range, which includes account balance and transactions.</td>
+        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/statement</td>
             <td>@Html.Raw(Model.TransactionsServiceParameters)</td>
         </tr>
     </table>
     <h2>Financial Institution Data</h2>
-    <p>All OpenBank services require the following financial institution data parameters.
-        <ul>
-            <li>url</li>
-             <li>fid</li>
-             <li>org</li>
-        </ul>
-        This information, which is unique to each financial institution, can be obtained by using the directory located at <a href="http://www.ofxhome.com/">http://www.ofxhome.com/</a>.</p>
+    <p>
+    Financial Institution Data resource parameters <strong>ofx_url</strong>, <strong>fid</strong> and <strong>org</strong>
+    can be obtained by using the directory located at <a href="http://www.ofxhome.com/">http://www.ofxhome.com/</a>.
+    </p>
+    <h2>About</h2>
+    <ul>
+    <li>Author: Brady Holt (<a href="http://www.geekytidbits.com/">http://www.geekytidbits.com/</a>)</li>
+    <li>Project Location: <a href="https://github.com/bradyholt/OpenBank">https://github.com/bradyholt/OpenBank</a>
+    </ul>
 </body>
 </html>
