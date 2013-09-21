@@ -24,6 +24,7 @@ namespace OpenBank.Service.Module
 				};
 
 				var fetcher = new OfxAssimilate.AccountsFetcher (requestParameters);
+				fetcher.Fetch();
 
 				return Negotiate
 					.WithModel(fetcher.Response)

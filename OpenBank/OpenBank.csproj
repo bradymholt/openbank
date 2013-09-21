@@ -72,7 +72,6 @@
     <Compile Include="OfxData\OfxStatementTransaction.cs" />
     <Compile Include="OfxData\Status.cs" />
     <Compile Include="Service\DiagnosticsConfigBootstrapper.cs" />
-    <Compile Include="Service\ParameterHelper.cs" />
     <Compile Include="Service\ParameterFormat.cs" />
     <Compile Include="Service\ParameterValues.cs" />
     <Compile Include="Service\AccountTypeValues.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="OfxAssimilate\OfxResponseError.cs" />
     <Compile Include="OfxAssimilate\Exception\ParametersMissingException.cs" />
     <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
+    <Compile Include="Service\ParameterHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -17,14 +17,7 @@ namespace OpenBank.Service
             }
 
             return date;
-        }
 
-		public static OfxData.OfxAccountType GetAccountType(string typeText){
-			OfxData.OfxAccountType type = OpenBank.OfxData.OfxAccountType.OTHER;
-			if (!string.IsNullOrEmpty (typeText)) {
-				Enum.TryParse<OfxData.OfxAccountType> (typeText, out type);
-			}
-			return type;
-		}
+        }
     }
 }

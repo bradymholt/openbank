@@ -22,7 +22,12 @@ namespace OpenBank.Test
             string validDate = "2011";
 			DateTime parsedDate = ParameterHelper.GetDateParameter(validDate);
             Assert.AreEqual(DateTime.Now.ToString("yyyyMMdd"), parsedDate.ToString("yyyyMMdd"));
-
         }
+
+		[Test]
+		public void EmptyAccountType(){
+			OfxData.OfxAccountType type = ParameterHelper.GetAccountType ("");
+			Assert.AreEqual (OfxData.OfxAccountType.OTHER, type);
+		}
     }
 }

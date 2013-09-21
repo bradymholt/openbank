@@ -13,7 +13,7 @@ namespace OpenBank.Service.Module
     {
         public Statement()
         {
-			Post["/statement"] = parameters =>
+			Get["/statement"] = parameters =>
             {
                 var request = this.Bind<Parameters>();
 
@@ -26,12 +26,13 @@ namespace OpenBank.Service.Module
                     Password = request.password,
                     AccountID = request.account_id,
                     BankID = request.bank_id,
-					AccountType = (OfxData.OfxAccountType)Enum.Parse(typeof(OfxData.OfxAccountType), request.account_type),
+					AccountType = ParameterHelper.GetAccountType(request.account_type),
 					DateStart = ParameterHelper.GetDateParameter(request.date_start),
 					DateEnd = ParameterHelper.GetDateParameter(request.date_end)
                 };
 
 				var fetcher = new OfxAssimilate.StatementFetcher(requestParameters);
+				fetcher.Fetch();
 
 				return Negotiate
 					.WithModel(fetcher.Response)

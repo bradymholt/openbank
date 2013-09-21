@@ -38,8 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OfxToXmlParser.cs" />
-    <Compile Include="ParameterHelper.cs" />
     <Compile Include="OfxFetcher.cs" />
+    <Compile Include="ParameterHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

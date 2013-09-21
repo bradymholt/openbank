@@ -2,10 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="OpenBank/OfxAssimilate/OfxFetcher.cs">
     <Files>
-      <File FileName="OpenBank/OfxAssimilate/Statement/StatementFetcher.cs" Line="108" Column="34" />
-      <File FileName="OpenBank/OfxAssimilate/OfxFetcher.cs" Line="92" Column="8" />
-      <File FileName="OpenBank/OfxAssimilate/OfxResponseError.cs" Line="3" Column="33" />
-      <File FileName="OpenBank/OfxAssimilate/OfxResponse.cs" Line="3" Column="33" />
+      <File FileName="OpenBank/OfxAssimilate/OfxFetcher.cs" Line="99" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
