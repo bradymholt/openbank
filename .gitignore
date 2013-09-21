@@ -6,3 +6,5 @@ packages
 TestResults
 test-results
 *.suo
+*.userprefs
+*.test-cache
