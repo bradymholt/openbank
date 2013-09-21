@@ -13,7 +13,7 @@ namespace OpenBank.Service.Module
     {
         public Statement()
         {
-			Get["/statement"] = parameters =>
+			Post["/statement"] = parameters =>
             {
                 var request = this.Bind<Parameters>();
 
