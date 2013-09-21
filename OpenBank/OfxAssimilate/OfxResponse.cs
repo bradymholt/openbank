@@ -7,15 +7,20 @@ namespace OpenBank.OfxAssimilate
 	{
 		public OfxResponse(HttpStatusCode status)
 		{
-			this.HttpStatus = status;
+			this.HttpStatus = (int)status;
+		}
+
+		public OfxResponse(int statusCode)
+		{
+			this.HttpStatus = statusCode;
 		}
 
 		public OfxResponse()
-			:this(HttpStatusCode.OK)
+			:this((int)HttpStatusCode.OK)
 		{
 		}
 
-		internal HttpStatusCode HttpStatus {get; set; }
+		internal int HttpStatus {get; set; }
 	}
 }
 

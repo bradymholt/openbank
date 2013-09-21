@@ -33,12 +33,9 @@ namespace OpenBank.Service.Module
 
 				var fetcher = new OfxAssimilate.StatementFetcher(requestParameters);
 
-				if (fetcher.Fetch ()){
-					return fetcher.Response;
-				}
-				else{
-					return Response.AsJson (fetcher.Response, (HttpStatusCode)fetcher.Response.HttpStatus);
-				}
+				return Negotiate
+					.WithModel(fetcher.Response)
+					.WithStatusCode(fetcher.Response.HttpStatus);
             };
         }
 
