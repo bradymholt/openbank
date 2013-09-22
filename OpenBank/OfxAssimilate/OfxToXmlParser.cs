@@ -87,7 +87,8 @@ namespace OpenBank.OfxAssimilate
 				foreach (string line in lines) {
 					if (line.Contains ("ACCTINFO>") || isAcctInfoLine) {
 						if (line.Contains("<CCACCTINFO")){
-							accountInfoTags.Add ("<ACCTTYPE>CREDITCARD");
+							//CCACCTINFO does not contain ACCTTYPE but we will add it for easier parsing
+							accountInfoTags.Add ("<ACCTTYPE>" + OfxData.OfxAccountType.CREDITCARD.ToString());
 						}
 						else if (line.Contains ("<ACCTINFO>")
 							|| line.Contains ("<DESC")
