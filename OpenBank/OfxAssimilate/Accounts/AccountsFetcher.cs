@@ -23,21 +23,21 @@ namespace OpenBank.OfxAssimilate
           + "  </ACCTINFOTRNRQ>\n"
           + " </SIGNUPMSGSRQV1>";
 
-        protected override string BuildRequestInnerBody()
+		public override string BuildRequestInnerBody()
         {
             string request = string.Format(OFX_ACCOUNT_LIST_REQUEST, GenerateRandomString(8));
             return request;
         }
 
-		protected override OfxResponse BuildResponse(XElement parsedOfx){
+		public override OfxResponse BuildResponse(XElement parsedOfx){
 			var response = new AccountsResponse ();
 
 			var accounts = parsedOfx.Element ("ACCTINFORS");
 			if (accounts != null) {
 				response.accounts =
-					(from c in parsedOfx.Descendants ("ACCTINFO")
+					(from c in accounts.Descendants("ACCTINFO")
 					 select new OfxData.OfxAccount {
-						bank_id = c.Element("BANKID").Value,
+						bank_id = ((c.Element("BANKID") != null) ? c.Element("BANKID").Value : ""),
 						account_id = c.Element("ACCTID").Value,
 						account_type = c.Element("ACCTTYPE").Value,
 						description = c.Element("DESC").Value

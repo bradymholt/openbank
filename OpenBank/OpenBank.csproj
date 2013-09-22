@@ -94,6 +94,7 @@
     <Compile Include="OfxAssimilate\Exception\ParametersMissingException.cs" />
     <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
     <Compile Include="Service\ParameterHelper.cs" />
+    <Compile Include="OfxAssimilate\ParameterRequired.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

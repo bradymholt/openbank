@@ -55,35 +55,31 @@ namespace OpenBank.OfxAssimilate
 			+ "  </CCSTMTTRNRQ>\n"
 			+ " </CREDITCARDMSGSRQV1>";
 
-		protected override string BuildRequestInnerBody ()
+		public override string BuildRequestInnerBody ()
 		{
 			string request = string.Empty;
-			switch (m_statementParameters.AccountType) {
-			case OfxData.OfxAccountType.CREDITCARD:
+			if (m_statementParameters.AccountType == OfxData.OfxAccountType.CREDITCARD.ToString ()) {
 				request = string.Format (CREDIT_CARD_STATEMENT_REQUEST,
-				                         GenerateRandomString (8),
-				                         GenerateRandomString (5),
-				                         m_statementParameters.AccountID,
-				                         m_statementParameters.DateStart.ToString ("yyyyMMdd"),
-				                         m_statementParameters.DateEnd.ToString ("yyyyMMdd"));
-				break;
-			default:
+                     GenerateRandomString (8),
+                     GenerateRandomString (5),
+                     m_statementParameters.AccountID,
+                     m_statementParameters.DateStart.ToString ("yyyyMMdd"),
+                     m_statementParameters.DateEnd.ToString ("yyyyMMdd"));
+			} else {
 				request = string.Format (BANKING_STATEMENT_REQUEST,
-				                         GenerateRandomString (8),
-				                         GenerateRandomString (5),
-				                         m_statementParameters.BankID,
-				                         m_statementParameters.AccountID,
-				                         m_statementParameters.AccountType.ToString (),
-				                         m_statementParameters.DateStart.ToString ("yyyyMMdd"),
-				                         m_statementParameters.DateEnd.ToString ("yyyyMMdd"));
-				break;
-
+	                 GenerateRandomString (8),
+	                 GenerateRandomString (5),
+	                 m_statementParameters.BankID,
+	                 m_statementParameters.AccountID,
+	                 m_statementParameters.AccountType,
+	                 m_statementParameters.DateStart.ToString ("yyyyMMdd"),
+	                 m_statementParameters.DateEnd.ToString ("yyyyMMdd"));
 			}
 
 			return request;
 		}
 
-		protected override OfxResponse BuildResponse (XElement parsedOfx)
+		public override OfxResponse BuildResponse (XElement parsedOfx)
 		{
 			var response = new StatementResponse ();
 

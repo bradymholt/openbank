@@ -4,7 +4,7 @@ using System;
 namespace OpenBank.Test
 {
 	[TestFixture()]
-	public class OfxFetcher
+	public class OfxFetcherTest
 	{
 		[Test()]
 		public void TestGenerateRandomString ()

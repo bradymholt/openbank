@@ -12,6 +12,7 @@ namespace OpenBank.Service.Module
 	{
 		public Accounts ()
 		{
+			//wget --header="Accept: application/json" --post-data="ofx_url=https://ofx.bankofamerica.com/cgi-forte/fortecgi?servicename=ofx_2-3%26pagename=ofx&fid=6812&org=HAN&user_id=user&password=pass" http://localhost:1234/accounts
 			Post ["/accounts"] = parameters =>
 			{
 				var request = this.Bind<Parameters> ();
@@ -36,13 +37,9 @@ namespace OpenBank.Service.Module
 		{
 			[ParameterFormat("http://bank.com/service-path")]
 			public string ofx_url { get; set; }
-
 			public string fid { get; set; }
-
 			public string org { get; set; }
-
 			public string user_id { get; set; }
-
 			public string password { get; set; }
 		}
 	}

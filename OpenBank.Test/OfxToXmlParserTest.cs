@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace OpenBank.Test
 {
 	[TestFixture()]
-    public class OfxToXmlParserTest
+	public class OfxToXmlParserTest
     {
         [Test]
         public void ParseStatement()
@@ -21,7 +21,7 @@ namespace OpenBank.Test
         [Test]
         public void ParseOfx()
         {
-            string raw = File.ReadAllText("files/ACCTINFORS.ofx");
+            string raw = File.ReadAllText("files/ACCTINFORS_CHECKING.ofx");
 			var parser = new OfxAssimilate.OfxToXmlParser(raw);
 			XElement parsed = parser.Parse();
 			Assert.AreEqual ("CHECKING", parsed.Element ("ACCTINFORS").Element("ACCTINFO").Element ("ACCTTYPE").Value);

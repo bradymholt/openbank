@@ -37,16 +37,20 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OfxToXmlParser.cs" />
-    <Compile Include="OfxFetcher.cs" />
-    <Compile Include="ParameterHelper.cs" />
+    <Compile Include="AccountsFetcherTest.cs" />
+    <Compile Include="OfxFetcherTest.cs" />
+    <Compile Include="OfxToXmlParserTest.cs" />
+    <Compile Include="ParameterHelperTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="files\BANKMSGSRSV1.ofx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="files\ACCTINFORS.ofx">
+    <None Include="files\ACCTINFORS_CHECKING.ofx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="files\ACCTINFORS_CREDIT_CARD.ofx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -58,9 +58,9 @@ namespace OpenBank.OfxAssimilate
 			+ " {6}\n"
 			+ "</OFX>";
 
-		protected abstract string BuildRequestInnerBody ();
+		public abstract string BuildRequestInnerBody ();
 
-		protected abstract OfxResponse BuildResponse (XElement parsedOfx);
+		public abstract OfxResponse BuildResponse (XElement parsedOfx);
 
 		public bool Fetch ()
 		{
@@ -141,7 +141,11 @@ namespace OpenBank.OfxAssimilate
 			List<string> missingParameters = new List<string> ();
 			foreach (PropertyInfo pi in m_parameters.GetType().GetProperties()) {
 				object value = pi.GetValue (m_parameters, null);
-				if (value == null || string.IsNullOrEmpty (value.ToString())) {
+
+				object[] parameterRequiredAttributes = pi.GetCustomAttributes(typeof(ParameterRequired), false);
+				bool isRequired = parameterRequiredAttributes.Length > 0;
+			
+				if (isRequired &&  (value == null || string.IsNullOrEmpty (value.ToString()))) {
 					missingParameters.Add (pi.Name);
 				}
 			}
