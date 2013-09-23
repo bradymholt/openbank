@@ -83,7 +83,6 @@ namespace OpenBank.OfxAssimilate
 
 				List<string> accountInfoTags = new List<string> ();
 				bool isAcctInfoLine = false;
-				bool isCreditCardAccount = false;
 				foreach (string line in lines) {
 					if (line.Contains ("ACCTINFO>") || isAcctInfoLine) {
 						if (line.Contains("<CCACCTINFO")){

@@ -64,57 +64,60 @@ namespace OpenBank.OfxAssimilate
 
 		public bool Fetch ()
 		{
-			try {
-				//request body
-				this.OfxRequestBody = this.BuildOfxRequest ();
-
-				//get raw ofx response
-				this.OfxResponseBody = SendRequestAndGetResponse (this.OfxRequestBody, m_parameters.OFX_URL);
-
-				//parse ofx to xml
-				OfxToXmlParser parser = new OfxToXmlParser (this.OfxResponseBody);
-				this.ParsedOfx = parser.Parse ();
-
-				//build response
-				this.Response = this.BuildResponse (this.ParsedOfx);
-
-			} catch (ParametersMissingException pmex){
+			List<string> missingParameters = GetMissingParameters (); 
+			if (missingParameters.Count > 0) {
 				this.Response = new OfxResponseError (HttpStatusCode.BadRequest) {
 					friendly_error = "The bank could not be contacted because of missing information.",
-					detailed_error = string.Concat("Missing parameter(s): ", string.Join(", ", pmex.MissingNames))
+					detailed_error = string.Concat("Missing parameter(s): ", string.Join(", ", missingParameters))
 				};
-			} catch (System.UriFormatException uriEx){
-				this.Response = new OfxResponseError (HttpStatusCode.BadRequest) {
-					friendly_error = "The bank could not be contacted.",
-					detailed_error = uriEx.Message
-				};
-			} catch (WebException e) {
-				using (WebResponse response = e.Response) {
-					HttpWebResponse httpResponse = (HttpWebResponse)response;
-					using (Stream data = response.GetResponseStream())
-					using (var reader = new StreamReader(data)) {
-						this.OfxResponseBody = reader.ReadToEnd ();
-						this.Response = new OfxResponseError ((HttpStatusCode)((int)httpResponse.StatusCode)) {
-							friendly_error = "An error occured when communicating with the bank.",
-							detailed_error = this.OfxResponseBody
-						};
+			} else {
+				try {
+
+					//request body
+					this.OfxRequestBody = this.BuildOfxRequest ();
+
+					//get raw ofx response
+					this.OfxResponseBody = SendRequestAndGetResponse (this.OfxRequestBody, m_parameters.OFX_URL);
+
+					//parse ofx to xml
+					OfxToXmlParser parser = new OfxToXmlParser (this.OfxResponseBody);
+					this.ParsedOfx = parser.Parse ();
+
+					//build response
+					this.Response = this.BuildResponse (this.ParsedOfx);
+				} catch (System.UriFormatException uriEx) {
+					this.Response = new OfxResponseError (HttpStatusCode.BadRequest) {
+						friendly_error = "The bank could not be contacted.",
+						detailed_error = uriEx.Message
+					};
+				} catch (WebException e) {
+					using (WebResponse response = e.Response) {
+						HttpWebResponse httpResponse = (HttpWebResponse)response;
+						using (Stream data = response.GetResponseStream())
+						using (var reader = new StreamReader(data)) {
+							this.OfxResponseBody = reader.ReadToEnd ();
+							this.Response = new OfxResponseError ((HttpStatusCode)((int)httpResponse.StatusCode)) {
+								friendly_error = "An error occured when communicating with the bank.",
+								detailed_error = this.OfxResponseBody
+							};
+						}
 					}
+				} catch (OfxStatusException statusEx) {
+					this.Response = new OfxResponseError (HttpStatusCode.BadRequest) {
+						friendly_error =  string.Concat("Bank response: " + statusEx.Message),
+						detailed_error = string.Format("{0} ({1})", statusEx.Message, statusEx.Code)
+					};
+				} catch (OfxParseException pex) {
+					this.Response = new OfxResponseError (HttpStatusCode.InternalServerError) {
+						friendly_error = "An error occured when reading the response from the bank.",
+						detailed_error = pex.Message
+					};
+				} catch (Exception ex) {
+					this.Response = new OfxResponseError (HttpStatusCode.InternalServerError) {
+						friendly_error = "An error occured when processing the response from the bank.",
+						detailed_error = ex.Message  
+					};
 				}
-			} catch (OfxStatusException statusEx){
-				this.Response = new OfxResponseError (HttpStatusCode.BadRequest) {
-					friendly_error =  string.Concat("Bank response: " + statusEx.Message),
-					detailed_error = string.Format("{0} ({1})", statusEx.Message, statusEx.Code)
-				};
-			} catch(OfxParseException pex){
-				this.Response = new OfxResponseError (HttpStatusCode.InternalServerError) {
-					friendly_error = "An error occured when reading the response from the bank.",
-					detailed_error = pex.Message
-				};
-			} catch(Exception ex){
-				this.Response = new OfxResponseError (HttpStatusCode.InternalServerError) {
-					friendly_error = "An error occured when processing the response from the bank.",
-					detailed_error = ex.Message  
-				};
 			}
 
 			return !(this.Response is OfxResponseError);
@@ -122,8 +125,6 @@ namespace OpenBank.OfxAssimilate
 
 		protected string BuildOfxRequest ()
 		{
-			EnsureAllParametersAvailable ();
-
 			string requestInnerBody = BuildRequestInnerBody ();
 			string requestBody = string.Format (OFX_REQUEST,
 			                                    GenerateRandomString (IDENTIFIER_CHARS, 32),
@@ -137,22 +138,21 @@ namespace OpenBank.OfxAssimilate
 			return requestBody;
 		}
 
-		public void EnsureAllParametersAvailable(){
+		public List<string> GetMissingParameters ()
+		{
 			List<string> missingParameters = new List<string> ();
 			foreach (PropertyInfo pi in m_parameters.GetType().GetProperties()) {
 				object value = pi.GetValue (m_parameters, null);
 
-				object[] parameterRequiredAttributes = pi.GetCustomAttributes(typeof(ParameterRequired), false);
+				object[] parameterRequiredAttributes = pi.GetCustomAttributes (typeof(ParameterRequired), false);
 				bool isRequired = parameterRequiredAttributes.Length > 0;
 			
-				if (isRequired &&  (value == null || string.IsNullOrEmpty (value.ToString()))) {
+				if (isRequired && (value == null || string.IsNullOrEmpty (value.ToString ()))) {
 					missingParameters.Add (pi.Name);
 				}
 			}
 
-			if (missingParameters.Count > 0) {
-				throw new ParametersMissingException (missingParameters);
-			}
+			return missingParameters;
 		}
 
 		public string SendRequestAndGetResponse (string requestBody, string ofx_url)

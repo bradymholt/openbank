@@ -91,7 +91,6 @@
     <Compile Include="OfxAssimilate\OfxFetchParameters.cs" />
     <Compile Include="OfxAssimilate\Exception\OfxParseException.cs" />
     <Compile Include="OfxAssimilate\OfxResponseError.cs" />
-    <Compile Include="OfxAssimilate\Exception\ParametersMissingException.cs" />
     <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
     <Compile Include="Service\ParameterHelper.cs" />
     <Compile Include="OfxAssimilate\ParameterRequired.cs" />
