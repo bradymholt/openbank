@@ -1,7 +1,7 @@
 OpenBank
 ========
 
-A friendly REST service wrapper for OFX Servers.
+A friendly REST service wrapper for OFX bank servers.
 
 ##Quick Start
 1. Download latest release zip file from [https://github.com/bradyholt/OpenBank/releases](https://github.com/bradyholt/OpenBank/releases)  
