@@ -23,8 +23,7 @@ To get a list of transactions for a bank account, you'll want to use the **state
 - date_end
 
 If you have a checking account at Chase, you would use the directory at [OFX Home](http://www.ofxhome.com) to get Chase's OFX information
-including the ofx_url, fid, and org.  The direct link for Chase's info is [http://www.ofxhome.com/index.php/institution/view/636](http://www.ofxhome.com/index.php/institution/view/636).  
-The bank_id is usually your routing number and account_type should be one of the following: CHECKING, SAVING, MONEYMRKT, CREDITCARD, OTHER.  date_start and date_end 
+including the ofx_url, fid, and org.  The direct link for Chase's info is [http://www.ofxhome.com/index.php/institution/view/636](http://www.ofxhome.com/index.php/institution/view/636).  The bank_id is usually your routing number and account_type should be one of the following: CHECKING, SAVING, MONEYMRKT, CREDITCARD, OTHER.  date_start and date_end 
 parameters should be in YYYYMMDD format.  account_id is your account number.
 
 Using wget, you can download transactions for your Chase account, for date range 9/1/2013 to 9/15/2013, and save as JSON file with the following command:
