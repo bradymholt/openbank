@@ -7,7 +7,7 @@ A friendly REST service wrapper for OFX bank servers.
 1. Download latest release zip file from [https://github.com/bradyholt/OpenBank/releases](https://github.com/bradyholt/OpenBank/releases)  
 2. Unzip and run *OpenBank.exe* from command line.  If using mono, run *mono OpenBank.exe* 
 3. OpenBank should fire up and now be listening on port 1234, by default.
-4. In a browser, navigate to http://localhost:1234/ to ensure OpenBank if running and to get more info.
+4. In a browser, navigate to http://localhost:1234/ to ensure OpenBank is running and to get more info.
 
 ##Get Transactions Example
 To get a list of transactions for a bank account, you'll want to use the **statement** (POST) resource.  The required parameters for this resource are:
