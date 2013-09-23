@@ -25,7 +25,7 @@ account_type | CHECKING, SAVING, MONEYMRKT, CREDITCARD, OTHER
 date_start | YYYYMMDD format
 date_end | YYYYMMDD format
 
-For example -- If you have a checking account at Chase, you would use the directory at [OFX Home](http://www.ofxhome.com) to get Chase's OFX information [direct link](http://www.ofxhome.com/index.php/institution/view/636).
+For example -- If you have a checking account at Chase, you would use the directory at [OFX Home](http://www.ofxhome.com) to get Chase's OFX information ([direct link](http://www.ofxhome.com/index.php/institution/view/636)).
 including the ofx_url, fid, and org.  The rest of the paramters should be known by you already.  Using wget, you could download transactions for your Chase account, for date range 9/1/2013 to 9/15/2013, and save as JSON file with the following command:
 
     wget --header="Accept: application/json" --post-data="ofx_url=https://ofx.chase.com
