@@ -18,7 +18,7 @@ namespace OpenBank.OfxData
         /// <summary>
         /// BANKID
         /// </summary>
-        public string bank_id { get; set; }
+        public string bank_code { get; set; }
 
         /// <summary>
         /// ACCTID

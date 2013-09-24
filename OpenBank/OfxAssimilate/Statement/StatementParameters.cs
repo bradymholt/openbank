@@ -7,7 +7,7 @@ namespace OpenBank.OfxAssimilate
 {
 	public class StatementParameters : OfxFetchParameters
     {
-        public string BankID { get; set; }
+        public string BankCode { get; set; }
 
 		[ParameterRequired]
         public string AccountID { get; set; }

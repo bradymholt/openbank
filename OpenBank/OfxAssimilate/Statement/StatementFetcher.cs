@@ -69,7 +69,7 @@ namespace OpenBank.OfxAssimilate
 				request = string.Format (BANKING_STATEMENT_REQUEST,
 	                 GenerateRandomString (8),
 	                 GenerateRandomString (5),
-	                 m_statementParameters.BankID,
+	                 m_statementParameters.BankCode,
 	                 m_statementParameters.AccountID,
 	                 m_statementParameters.AccountType,
 	                 m_statementParameters.DateStart.ToString ("yyyyMMdd"),

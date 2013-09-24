@@ -37,7 +37,7 @@ namespace OpenBank.OfxAssimilate
 				response.accounts =
 					(from c in accounts.Descendants("ACCTINFO")
 					 select new OfxData.OfxAccount {
-						bank_id = ((c.Element("BANKID") != null) ? c.Element("BANKID").Value : ""),
+						bank_code = ((c.Element("BANKID") != null) ? c.Element("BANKID").Value : ""),
 						account_id = c.Element("ACCTID").Value,
 						account_type = c.Element("ACCTTYPE").Value,
 						description = c.Element("DESC").Value
