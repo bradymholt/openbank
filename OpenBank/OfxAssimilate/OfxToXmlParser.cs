@@ -44,17 +44,12 @@ namespace OpenBank.OfxAssimilate
 				List<string> statusTags = new List<string> ();
 				bool isStatusLine = false;
 				foreach (string line in lines) {
-					if (line.Contains ("STATUS>") || isStatusLine) {
+					if (line.Contains ("<STATUS>") || line.Contains ("</STATUS>") || isStatusLine) {
 						if (!line.Contains ("</STATUS>")) {
 							statusTags.Add (line);
 						}
 
-						//only handle 1 status message
-						if (line.Contains ("</STATUS>")) {
-							break;
-						} else {
-							isStatusLine = true;
-						}
+						isStatusLine = !line.Contains ("</STATUS>");
 					} else {
 						continue;
 					}
@@ -107,39 +102,41 @@ namespace OpenBank.OfxAssimilate
 
 				// parse status
 				if (statusTags.Count > 0) {
-					XElement statusElement = new XElement ("STATUS");
-					root.Add (statusElement);
+					XElement statusesElement = new XElement ("STATUSES");
+					root.Add (statusesElement);
 
 					foreach (var line in statusTags) {
-						if (!line.Contains ("STATUS>")) {
+						if (line.Contains ("<STATUS>")) {
+							child = new XElement ("STATUS");
+							statusesElement.Add (child);
+						} else if (!line.Contains ("</STATUS>")) {
 							var tagName = GetTagName (line);
 							var elementChild = new XElement (tagName) {
 								Value = GetTagValue(line)
 							};
 
-							statusElement.Add (elementChild);
+							child.Add (elementChild);
 						}
 					}
-				}
 
-				var status = root.Element ("STATUS");
-				if (status != null) {
-					var codeElement = status.Element ("CODE");
-					if (codeElement != null 
-					    && !string.IsNullOrEmpty(codeElement.Value)
-					    && codeElement.Value != STATUS_CODE_SUCCESS){
-
+					foreach(XElement status in statusesElement.Descendants("STATUS")){
+						var code = status.Element("CODE");
 						string message = string.Empty;
 						var messageElement = status.Element ("MESSAGE");
-						if (messageElement != null && messageElement.Value != null){
+						if (messageElement != null 
+						    && messageElement.Value != null){
 							message = messageElement.Value;
+						} 
+
+						if (code != null
+							    && (!string.IsNullOrEmpty(code.Value))
+							    && code.Value != STATUS_CODE_SUCCESS){
+							throw new OfxStatusException(code.Value, message);
 						}
-						   
-						throw new OfxStatusException(codeElement.Value, message);
 					}
 				}
-				
-					// parse transactions
+						
+				// parse transactions
 				if (transactionTags.Count > 0) {
 					//balances
 					foreach (var line in balanceTags) {

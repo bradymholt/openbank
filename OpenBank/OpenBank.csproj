@@ -70,7 +70,6 @@
     <Compile Include="OfxData\OfxStatement.cs" />
     <Compile Include="OfxData\OfxStatementBalance.cs" />
     <Compile Include="OfxData\OfxStatementTransaction.cs" />
-    <Compile Include="OfxData\Status.cs" />
     <Compile Include="Service\DiagnosticsConfigBootstrapper.cs" />
     <Compile Include="Service\ParameterFormat.cs" />
     <Compile Include="Service\ParameterValues.cs" />

@@ -25,7 +25,7 @@ namespace OpenBank.Service.Module
                     UserID = request.user_id,
                     Password = request.password,
                     AccountID = request.account_id,
-                    BankCode = request.bank_code,
+                    BankID = request.bank_id,
 					AccountType = request.account_type,
 					DateStart = ParameterHelper.GetDateParameter(request.date_start),
 					DateEnd = ParameterHelper.GetDateParameter(request.date_end)
@@ -52,7 +52,7 @@ namespace OpenBank.Service.Module
 
             public string password { get; set; }
 
-			public string bank_code { get; set; }
+			public string bank_id { get; set; }
 
             public string account_id { get; set; }
 
