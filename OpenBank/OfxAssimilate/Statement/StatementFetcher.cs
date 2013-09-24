@@ -92,7 +92,7 @@ namespace OpenBank.OfxAssimilate
 				ExtractBalance (parsedOfx.Element ("LEDGERBAL"), response.statement.ledger_balance);
 				ExtractBalance (parsedOfx.Element ("AVAILBAL"), response.statement.available_balance);
 
-				response.statement.transactions =
+				var ofxTransactions  =
 					(from c in parsedOfx.Descendants ("STMTTRN")
 					 let name = ExtractAndScrubElementText (c.Element ("NAME"))
 					 let memo = ExtractAndScrubElementText (c.Element ("MEMO"))
@@ -105,6 +105,10 @@ namespace OpenBank.OfxAssimilate
 							NumberFormatInfo.InvariantInfo),
 					name = name
 				}).ToList ();
+
+				response.statement.transactions = ofxTransactions
+					.Where (t => t.date >= m_statementParameters.DateStart && t.date <= m_statementParameters.DateEnd)
+					.ToList ();
 			}
 
 			return response;
