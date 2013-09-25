@@ -16,7 +16,7 @@ namespace OpenBank.Client
         {
             // Use accounts.sensitive.template as an example
             // In this git repo, any file ending in ".sensitive" is ignored.
-            JObject hash = JsonConvert.DeserializeObject(File.ReadAllText("../../accounts.sensitive")) as JObject;
+            JObject hash = JsonConvert.DeserializeObject(File.ReadAllText(@"C:\temp\accounts.sensitive")) as JObject;
             var postParameters = hash.First.First.ToObject<Dictionary<string, string>>();
 
             StringBuilder postData = new StringBuilder();
