@@ -9,8 +9,8 @@ namespace OpenBank.Test
 		[Test()]
 		public void TestGenerateRandomString ()
 		{
-			Assert.AreEqual (10, OfxAssimilate.OfxFetcher.GenerateRandomString (10).Length);
-			Assert.AreEqual ("XXXXX", OfxAssimilate.OfxFetcher.GenerateRandomString (new char[] { 'X' }, 5));
+			Assert.AreEqual (10, FetchOfx.OfxFetcher.GenerateRandomString (10).Length);
+			Assert.AreEqual ("XXXXX", FetchOfx.OfxFetcher.GenerateRandomString (new char[] { 'X' }, 5));
 		}
 	}
 }

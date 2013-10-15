@@ -17,7 +17,7 @@ namespace OpenBank.Service.Module
             {
                 var request = this.Bind<Parameters>();
 
-                var requestParameters = new OfxAssimilate.OfxStatementParameters()
+                var requestParameters = new FetchOfx.OfxStatementParameters()
                 {
                     OFX_URL = request.ofx_url,
                     FID = request.fid,
@@ -27,11 +27,11 @@ namespace OpenBank.Service.Module
                     AccountID = request.account_id,
                     BankID = request.bank_id,
 					AccountType = request.account_type,
-					DateStart = ParameterHelper.GetDateParameter(request.date_start),
-					DateEnd = ParameterHelper.GetDateParameter(request.date_end)
+					DateStart = ParameterHelper.ParseDateParameter(request.date_start),
+					DateEnd = ParameterHelper.ParseDateParameter(request.date_end)
                 };
 
-				var fetcher = new OfxAssimilate.OfxStatementFetcher(requestParameters);
+				var fetcher = new FetchOfx.OfxStatementFetcher(requestParameters);
 				fetcher.Fetch();
 
 				return Negotiate

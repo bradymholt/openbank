@@ -16,7 +16,7 @@ namespace OpenBank.Service.Module
 			Post ["/ofx/accounts"] = parameters =>
 			{
 				var request = this.Bind<Parameters> ();
-				var requestParameters = new OfxAssimilate.OfxAccountsParameters () {
+				var requestParameters = new FetchOfx.OfxAccountsParameters () {
 					OFX_URL = request.ofx_url,
 					FID = request.fid,
 					ORG = request.org,
@@ -24,7 +24,7 @@ namespace OpenBank.Service.Module
 					Password = request.password
 				};
 
-				var fetcher = new OfxAssimilate.OfxAccountsFetcher (requestParameters);
+				var fetcher = new FetchOfx.OfxAccountsFetcher (requestParameters);
 				fetcher.Fetch();
 
 				return Negotiate

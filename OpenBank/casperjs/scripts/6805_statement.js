@@ -1,78 +1,6 @@
-var args = require('system').args;
+phantom.injectJs('./scripts/6805.js');
 
-phantom.casperPath = args[1]; 
-phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
-
-var casper = require('casper').create({ 
-	verbose: true, 
-	logLevel: 'debug'
-});
-
-
-var online_id = casper.cli.get("user_id");
-var online_password = casper.cli.get("password");
-var account_id = casper.cli.get("account_id");
-var from_date = casper.cli.get("from_date");
-var to_date = casper.cli.get("to_date");
-var security_answers = casper.cli.get("security_answers").split();
-var output_path = casper.cli.get("output_path") + '/';
-
-casper.on('load.finished', function(resource) {
-	var fileNamePrefix = new Date().getTime();
-	
-    if (casper.cli.has("debug")) {
-		this.capture(output_path + '/' + fileNamePrefix + '-screenshot.png', {
-			top: 100,
-			left: 100,
-			width: 1000,
-			height: 800
-		});
-		
-		var href = this.evaluate(function() {
-			return document.location.href;
-		});
-	
-		var innerHTML = this.evaluate(function(){
-			return document.body.innerHTML;
-		});
-		
-		innerHTML = '<!-- ' + href + ' -->\n\n' + innerHTML;
-		
-		fs.write(output_path + '/' + fileNamePrefix + '-content.html', innerHTML, 'w');
-	}
-});
-
-sign_in = "https://safe.bankofamerica.com/login/sign-in/signOnScreen.go"
-casper.start(sign_in, function() {
-  this.fill('form[action="/login/sign-in/internal/entry/signOn.go"]', {
-    onlineId: online_id
-  }, true);
-});
-
-casper.then(function() {
-  //for(var i=0;i< security_answers.length;i++){
-	  challenge_exists = this.evaluate(function() {
-	    return __utils__.exists('[for=tlpvt-challenge-answer]');
-	  });
-	  
-	  if(challenge_exists){
-	    security_question = this.getHTML('[for=tlpvt-challenge-answer]') ;
-	    this.echo(security_question);
-	    this.fill('form[action="/login/sign-in/validateChallengeAnswer.go"]',{
-	      challengeQuestionAnswer: security_answers[0]
-	    }, true) ;
-	  }
-	  //else{
-	  //	break;
-	  //}
-  //}
-});
-
-casper.then(function() {
-  this.fill('form[action="/login/sign-in/validatePassword.go"]', {
-    password: online_password
-  }, true);
-}) ;
+login();
 
 casper.thenClick('a[id=\"'+account_id+'\"]') ;
 
@@ -88,13 +16,14 @@ casper.then(function() {
     var base64contents = this.base64encode(download_form_action, 'POST', {
         selectedTransPeriod: '',
         downloadTransactionType: 'customRange',
-        "searchBean.timeFrameStartDate": from_date,
-        "searchBean.timeFrameEndDate": to_date,
-        formatType: 'qfx'
+        'searchBean.searchMoreOptionsPanelUsed': 'false',
+        'searchBean.timeFrameStartDate': date_start,
+        'searchBean.timeFrameEndDate': date_end,
+        formatType: 'qfx'  
     });
 
     var data = decode_base64(base64contents) ;
-    require('fs').write(output_path + 'statement.qfx', data, 'w');
+    fs.write(output_path + 'statement.qfx', data, 'w');
 });
 
 casper.run();

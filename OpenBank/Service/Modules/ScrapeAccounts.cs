@@ -16,14 +16,14 @@ namespace OpenBank.Service.Module
 			Post["/scrape/accounts"] = parameters =>
 			{
 				var request = this.Bind<Parameters> ();
-				var requestParameters = new ScrapeAssimilate.ScrapeAccountsParameters () {
+				var requestParameters = new FetchScrape.ScrapeAccountsParameters () {
 					FID = request.fid,
 					UserID = request.user_id,
 					Password = request.password,
 					SecurityAnswers = request.security_answers
 				};
 
-				var fetcher = new ScrapeAssimilate.ScrapeAccountsFetcher(requestParameters);
+				var fetcher = new FetchScrape.ScrapeAccountsFetcher(requestParameters);
 				fetcher.Fetch();
 
 				return Negotiate

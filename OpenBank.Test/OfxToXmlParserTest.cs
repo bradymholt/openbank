@@ -12,7 +12,7 @@ namespace OpenBank.Test
         public void ParseStatement()
         {
             string raw = File.ReadAllText("files/BANKMSGSRSV1.ofx");
-			var parser = new OfxAssimilate.OfxToXmlParser(raw);
+			var parser = new Parse.OfxToXmlParser(raw);
 			XElement parsed = parser.Parse();
 			Assert.AreEqual("+2703.71", parsed.Element("LEDGERBAL").Element("BALAMT").Value);
             
@@ -22,7 +22,7 @@ namespace OpenBank.Test
         public void ParseOfx()
         {
             string raw = File.ReadAllText("files/ACCTINFORS_CHECKING.ofx");
-			var parser = new OfxAssimilate.OfxToXmlParser(raw);
+			var parser = new Parse.OfxToXmlParser(raw);
 			XElement parsed = parser.Parse();
 			Assert.AreEqual ("CHECKING", parsed.Element ("ACCTINFORS").Element("ACCTINFO").Element ("ACCTTYPE").Value);
 			Assert.AreEqual ("MYACCESS CHECKING", parsed.Element ("ACCTINFORS").Element ("ACCTINFO").Element ("DESC").Value);

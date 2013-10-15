@@ -12,7 +12,7 @@ namespace OpenBank.Test
         public void ParseDateParameterValid()
         {
             string validDate = "20130901";
-			DateTime parsedDate = Service.ParameterHelper.GetDateParameter(validDate);
+			DateTime parsedDate = ParameterHelper.ParseDateParameter(validDate);
             Assert.AreEqual(validDate, parsedDate.ToString("yyyyMMdd"));
         }
 
@@ -20,7 +20,7 @@ namespace OpenBank.Test
         public void ParseDateParameterInvalid()
         {
             string validDate = "2011";
-			DateTime parsedDate = Service.ParameterHelper.GetDateParameter(validDate);
+			DateTime parsedDate = ParameterHelper.ParseDateParameter(validDate);
             Assert.AreEqual(DateTime.Now.ToString("yyyyMMdd"), parsedDate.ToString("yyyyMMdd"));
         }
     }

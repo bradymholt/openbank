@@ -13,7 +13,7 @@ namespace OpenBank.Test
 		public void TestCase ()
 		{
 			string accountsJson = File.ReadAllText ("files/accounts.json");
-			List<OfxData.OfxAccount> accounts = JsonConvert.DeserializeObject<List<OfxData.OfxAccount>>(accountsJson);
+			List<DTO.Account> accounts = JsonConvert.DeserializeObject<List<DTO.Account>>(accountsJson);
 			Assert.AreEqual (accounts [0].description, "CHECKING");
 		}
 	}

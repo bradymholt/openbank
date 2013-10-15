@@ -15,20 +15,20 @@ namespace OpenBank.Service.Module
 		{
 			Post["/scrape/statement"] = parameters =>
 			{
-				var request = this.Bind<Parameters>();
+ 				var request = this.Bind<Parameters>();
 
-				var requestParameters = new ScrapeAssimilate.ScrapeStatementParameters()
+				var requestParameters = new FetchScrape.ScrapeStatementParameters()
 				{
 					FID = request.fid,
 					UserID = request.user_id,
 					Password = request.password,
 					SecurityAnswers = request.security_answers,
 					AccountID = request.account_id,
-					DateStart = Convert.ToDateTime(request.date_start),
-					DateEnd = Convert.ToDateTime(request.date_end)
+					DateStart = ParameterHelper.ParseDateParameter(request.date_start),
+					DateEnd = ParameterHelper.ParseDateParameter(request.date_end)
 				};
 
-				var fetcher = new ScrapeAssimilate.ScrapeStatementFetcher(requestParameters);
+				var fetcher = new FetchScrape.ScrapeStatementFetcher(requestParameters);
 				fetcher.Fetch();
 
 				return Negotiate

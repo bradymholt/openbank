@@ -79,42 +79,42 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OfxParse\OfxResponseBuilder.cs" />
-    <Compile Include="OfxData\OfxAccountType.cs" />
-    <Compile Include="OfxData\OfxStatement.cs" />
-    <Compile Include="OfxData\OfxStatementBalance.cs" />
-    <Compile Include="OfxData\OfxStatementTransaction.cs" />
     <Compile Include="Service\DiagnosticsConfigBootstrapper.cs" />
-    <Compile Include="Service\ParameterFormat.cs" />
-    <Compile Include="Service\ParameterValues.cs" />
     <Compile Include="Service\AccountTypeValues.cs" />
     <Compile Include="Service\Modules\Default.cs" />
-    <Compile Include="OfxData\OfxAccount.cs" />
-    <Compile Include="OfxAssimilate\OfxResponse.cs" />
-    <Compile Include="OfxAssimilate\OfxToXmlParser.cs" />
-    <Compile Include="OfxAssimilate\OfxFetcher.cs" />
-    <Compile Include="OfxAssimilate\OfxFetchParameters.cs" />
-    <Compile Include="OfxAssimilate\Exception\OfxParseException.cs" />
-    <Compile Include="OfxAssimilate\OfxResponseError.cs" />
-    <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
-    <Compile Include="Service\ParameterHelper.cs" />
-    <Compile Include="OfxAssimilate\ParameterRequired.cs" />
     <Compile Include="Service\Modules\ScrapeAccounts.cs" />
     <Compile Include="Service\Modules\ScrapeStatement.cs" />
     <Compile Include="Service\Modules\OfxStatement.cs" />
     <Compile Include="Service\Modules\OfxAccounts.cs" />
-    <Compile Include="ScrapeAssimilate\ScrapeFetcher.cs" />
-    <Compile Include="OfxAssimilate\Statement\OfxStatementFetcher.cs" />
-    <Compile Include="OfxAssimilate\Statement\OfxStatementParameters.cs" />
-    <Compile Include="OfxAssimilate\Statement\OfxStatementResponse.cs" />
-    <Compile Include="OfxAssimilate\Accounts\OfxAccountsFetcher.cs" />
-    <Compile Include="OfxAssimilate\Accounts\OfxAccountsResponse.cs" />
-    <Compile Include="OfxAssimilate\Accounts\OfxAccountsParameters.cs" />
-    <Compile Include="ScrapeAssimilate\Accounts\ScrapeAccountsFetcher.cs" />
-    <Compile Include="ScrapeAssimilate\Statement\ScrapeStatementFetcher.cs" />
-    <Compile Include="ScrapeAssimilate\ScrapeFetchParameters.cs" />
-    <Compile Include="ScrapeAssimilate\Accounts\ScrapeAccountsParameters.cs" />
-    <Compile Include="ScrapeAssimilate\Statement\ScrapeStatementParameters.cs" />
+    <Compile Include="DTO\Account.cs" />
+    <Compile Include="DTO\AccountType.cs" />
+    <Compile Include="DTO\Statement.cs" />
+    <Compile Include="DTO\StatementBalance.cs" />
+    <Compile Include="DTO\StatementTransaction.cs" />
+    <Compile Include="FetchOfx\Statement\OfxStatementParameters.cs" />
+    <Compile Include="FetchOfx\Statement\OfxStatementFetcher.cs" />
+    <Compile Include="FetchOfx\Accounts\OfxAccountsFetcher.cs" />
+    <Compile Include="FetchOfx\Accounts\OfxAccountsParameters.cs" />
+    <Compile Include="FetchOfx\OfxFetcher.cs" />
+    <Compile Include="FetchOfx\OfxFetchParameters.cs" />
+    <Compile Include="FetchScrape\ScrapeFetcher.cs" />
+    <Compile Include="FetchScrape\Accounts\ScrapeAccountsFetcher.cs" />
+    <Compile Include="FetchScrape\Statement\ScrapeStatementFetcher.cs" />
+    <Compile Include="FetchScrape\ScrapeFetchParameters.cs" />
+    <Compile Include="FetchScrape\Accounts\ScrapeAccountsParameters.cs" />
+    <Compile Include="FetchScrape\Statement\ScrapeStatementParameters.cs" />
+    <Compile Include="DTO\AccountsResponse.cs" />
+    <Compile Include="DTO\StatementResponse.cs" />
+    <Compile Include="DTO\ResponseError.cs" />
+    <Compile Include="Attributes\ParameterFormat.cs" />
+    <Compile Include="Attributes\ParameterValues.cs" />
+    <Compile Include="Attributes\ParameterRequired.cs" />
+    <Compile Include="Parse\OfxToXmlParser.cs" />
+    <Compile Include="Parse\OfxParseException.cs" />
+    <Compile Include="Parse\OfxStatusException.cs" />
+    <Compile Include="DTO\ServiceResponse.cs" />
+    <Compile Include="Service\ParameterHelper.cs" />
+    <Compile Include="Parse\OfxResponseBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -177,6 +177,9 @@
     <None Include="casperjs\scripts\common.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="casperjs\scripts\6805.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\default.cshtml">
@@ -195,10 +198,12 @@
   </Target>
   -->
   <ItemGroup>
-    <Folder Include="Scrape\" />
     <Folder Include="casperjs\" />
-    <Folder Include="ScrapeAssimilate\" />
-    <Folder Include="ScrapeAssimilate\Statement\" />
-    <Folder Include="ScrapeAssimilate\Accounts\" />
+    <Folder Include="FetchScrape\" />
+    <Folder Include="FetchScrape\Statement\" />
+    <Folder Include="FetchScrape\Accounts\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Parse\" />
+    <Folder Include="FetchOfx\Exception\" />
   </ItemGroup>
 </Project>
