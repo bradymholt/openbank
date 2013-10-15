@@ -16,12 +16,12 @@
         </tr>
         <tr style="vertical-align:top;">
         	<td><strong>Accounts</strong> - Returns a list of available accounts.</td>
-        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/accounts</td>
+        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/ofx/accounts</td>
             <td>@Html.Raw(Model.AccountsServiceParameters)</td>
         </tr>
         <tr style="vertical-align:top;">
         	<td><strong>Statement</strong> - Returns a statement for a single account, by date range, which includes account balance and transactions.</td>
-        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/statement</td>
+        	<td><strong>POST</strong> http://localhost:@Model.ServicePort/ofx/statement</td>
             <td>@Html.Raw(Model.TransactionsServiceParameters)</td>
         </tr>
     </table>

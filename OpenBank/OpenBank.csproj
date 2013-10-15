@@ -42,6 +42,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -70,6 +72,9 @@
     <Reference Include="System.Web.Razor.Unofficial">
       <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -83,18 +88,10 @@
     <Compile Include="Service\ParameterFormat.cs" />
     <Compile Include="Service\ParameterValues.cs" />
     <Compile Include="Service\AccountTypeValues.cs" />
-    <Compile Include="Service\Modules\Accounts.cs" />
-    <Compile Include="Service\Modules\Statement.cs" />
     <Compile Include="Service\Modules\Default.cs" />
     <Compile Include="OfxData\OfxAccount.cs" />
     <Compile Include="OfxAssimilate\OfxResponse.cs" />
-    <Compile Include="OfxAssimilate\Statement\StatementParameters.cs" />
-    <Compile Include="OfxAssimilate\Statement\StatementResponse.cs" />
     <Compile Include="OfxAssimilate\OfxToXmlParser.cs" />
-    <Compile Include="OfxAssimilate\Statement\StatementFetcher.cs" />
-    <Compile Include="OfxAssimilate\Accounts\AccountsFetcher.cs" />
-    <Compile Include="OfxAssimilate\Accounts\AccountsParameters.cs" />
-    <Compile Include="OfxAssimilate\Accounts\AccountsResponse.cs" />
     <Compile Include="OfxAssimilate\OfxFetcher.cs" />
     <Compile Include="OfxAssimilate\OfxFetchParameters.cs" />
     <Compile Include="OfxAssimilate\Exception\OfxParseException.cs" />
@@ -102,11 +99,84 @@
     <Compile Include="OfxAssimilate\Exception\OfxStatusException.cs" />
     <Compile Include="Service\ParameterHelper.cs" />
     <Compile Include="OfxAssimilate\ParameterRequired.cs" />
+    <Compile Include="Service\Modules\ScrapeAccounts.cs" />
+    <Compile Include="Service\Modules\ScrapeStatement.cs" />
+    <Compile Include="Service\Modules\OfxStatement.cs" />
+    <Compile Include="Service\Modules\OfxAccounts.cs" />
+    <Compile Include="ScrapeAssimilate\ScrapeFetcher.cs" />
+    <Compile Include="OfxAssimilate\Statement\OfxStatementFetcher.cs" />
+    <Compile Include="OfxAssimilate\Statement\OfxStatementParameters.cs" />
+    <Compile Include="OfxAssimilate\Statement\OfxStatementResponse.cs" />
+    <Compile Include="OfxAssimilate\Accounts\OfxAccountsFetcher.cs" />
+    <Compile Include="OfxAssimilate\Accounts\OfxAccountsResponse.cs" />
+    <Compile Include="OfxAssimilate\Accounts\OfxAccountsParameters.cs" />
+    <Compile Include="ScrapeAssimilate\Accounts\ScrapeAccountsFetcher.cs" />
+    <Compile Include="ScrapeAssimilate\Statement\ScrapeStatementFetcher.cs" />
+    <Compile Include="ScrapeAssimilate\ScrapeFetchParameters.cs" />
+    <Compile Include="ScrapeAssimilate\Accounts\ScrapeAccountsParameters.cs" />
+    <Compile Include="ScrapeAssimilate\Statement\ScrapeStatementParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="web.config" />
+    <None Include="casperjs\package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\bin\bootstrap.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\includes\jquery-1.7.2.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\casper.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\cli.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\clientutils.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\colorizer.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\events.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\http.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\mouse.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\pagestack.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\querystring.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\tester.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\utils.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\modules\xunit.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\scripts\1601_statement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\scripts\6805_accounts.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\scripts\6805_statement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="casperjs\scripts\common.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\default.cshtml">
@@ -124,4 +194,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Scrape\" />
+    <Folder Include="casperjs\" />
+    <Folder Include="ScrapeAssimilate\" />
+    <Folder Include="ScrapeAssimilate\Statement\" />
+    <Folder Include="ScrapeAssimilate\Accounts\" />
+  </ItemGroup>
 </Project>

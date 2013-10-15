@@ -16,8 +16,8 @@ namespace OpenBank.Test
 			var parser = new OfxToXmlParser (raw);
 			XElement parsed = parser.Parse ();
 
-			var fetcher = new AccountsFetcher (null);
-			AccountsResponse response = (AccountsResponse)fetcher.BuildResponse (parsed);
+			var fetcher = new OfxAccountsFetcher (null);
+			OfxAccountsResponse response = (OfxAccountsResponse)fetcher.BuildResponse (parsed);
 
 			Assert.AreEqual (1, response.accounts.Count);
 			Assert.AreEqual ("MYACCESS CHECKING", response.accounts [0].description);
@@ -30,8 +30,8 @@ namespace OpenBank.Test
 			var parser = new OfxToXmlParser (raw);
 			XElement parsed = parser.Parse ();
 
-			var fetcher = new AccountsFetcher (null);
-			AccountsResponse response = (AccountsResponse)fetcher.BuildResponse (parsed);
+			var fetcher = new OfxAccountsFetcher (null);
+			OfxAccountsResponse response = (OfxAccountsResponse)fetcher.BuildResponse (parsed);
 
 			Assert.AreEqual (2, response.accounts.Count);
 			Assert.AreEqual ("CREDIT CARD", response.accounts [0].description);
