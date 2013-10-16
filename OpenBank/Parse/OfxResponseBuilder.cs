@@ -61,8 +61,6 @@ namespace OpenBank.Parse
 				response.statement.transactions = ofxTransactions
 					.Where (t => t.date >= startDate && t.date <= endDate)
 						.ToList ();
-			} else {
-				throw new OfxParseException ("BANKTRANLIST element missing.");
 			}
 
 			return response;

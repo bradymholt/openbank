@@ -103,6 +103,11 @@ namespace OpenBank.FetchScrape
 					} else {
 						this.Response = ProcessScrape (m_workingOutputPath, m_workingID);
 					}
+				} catch (NotSupportedException nex){
+					this.Response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
+						friendly_error = "Bank is not supported.",
+						detailed_error = nex.Message
+					};
 				} catch (System.ComponentModel.Win32Exception) {
 					this.Response = new DTO.ResponseError (HttpStatusCode.InternalServerError) {
 						friendly_error = "An error occured when attempting to connect to the bank.",

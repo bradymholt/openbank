@@ -1,4 +1,4 @@
-phantom.injectJs('./scripts/6805.js');
+phantom.injectJs('./scripts/6812.js');
 
 login();
 
