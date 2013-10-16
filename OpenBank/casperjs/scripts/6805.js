@@ -7,23 +7,33 @@ function login() {
 	    onlineId: user_id
 	  }, true);
 	});
+	
+	casper.waitForSelector('body', function() {
+	  this.echo("security question check...");
+	  challenge_exists = this.evaluate(function() {
+	    return __utils__.exists('[for=tlpvt-challenge-answer]');
+	  });
+	  
+	  if(challenge_exists){
+	    this.fill('form[action="/login/sign-in/validateChallengeAnswer.go"]',{
+	      challengeQuestionAnswer: security_answers[0]
+	    }, true) ;
+	  }
+	  else{
+	 	 this.echo("security question NOT asked.");
+	  }
+	});
 
-	casper.then(function() {
-	  for(var i=0;i< security_answers.length;i++){
-		  challenge_exists = this.evaluate(function() {
-		    return __utils__.exists('[for=tlpvt-challenge-answer]');
-		  });
-		  
-		  if(challenge_exists){
-		    security_question = this.getHTML('[for=tlpvt-challenge-answer]') ;
-		    this.echo(security_question);
-		    this.fill('form[action="/login/sign-in/validateChallengeAnswer.go"]',{
-		      challengeQuestionAnswer: security_answers[i]
-		    }, true) ;
-		  }
-		  else{
-		  	break;
-		  }
+	casper.waitForSelector('body', function() {
+	  challenge_exists = this.evaluate(function() {
+	    return __utils__.exists('[for=tlpvt-challenge-answer]');
+	  });
+	  
+	  if(challenge_exists){
+	  	security_question = this.getHTML('[for=tlpvt-challenge-answer]');
+	  	security_question = security_question.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	  	fs.write(output_path + 'challenge_question.txt', security_question, 'w');
+	    this.die("Security question failure.", 1);
 	  }
 	});
 
@@ -32,4 +42,4 @@ function login() {
 	    password: password
 	  }, true);
 	});
- }
+}

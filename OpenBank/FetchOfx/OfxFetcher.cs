@@ -64,7 +64,7 @@ namespace OpenBank.FetchOfx
 
 		public bool Fetch ()
 		{
-			List<string> missingParameters = GetMissingParameters (); 
+			List<string> missingParameters = ParameterRequired.GetMissingParameters (m_parameters); 
 			if (missingParameters.Count > 0) {
 				this.Response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
 					friendly_error = "The bank could not be contacted because of missing information.",
@@ -136,23 +136,6 @@ namespace OpenBank.FetchOfx
 			                                    requestInnerBody);
 
 			return requestBody;
-		}
-
-		public List<string> GetMissingParameters ()
-		{
-			List<string> missingParameters = new List<string> ();
-			foreach (PropertyInfo pi in m_parameters.GetType().GetProperties()) {
-				object value = pi.GetValue (m_parameters, null);
-
-				object[] parameterRequiredAttributes = pi.GetCustomAttributes (typeof(ParameterRequired), false);
-				bool isRequired = parameterRequiredAttributes.Length > 0;
-			
-				if (isRequired && (value == null || string.IsNullOrEmpty (value.ToString ()))) {
-					missingParameters.Add (pi.Name);
-				}
-			}
-
-			return missingParameters;
 		}
 
 		public string SendRequestAndGetResponse (string requestBody, string ofx_url)

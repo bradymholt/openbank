@@ -32,8 +32,8 @@ namespace OpenBank.FetchScrape
 		protected override void PrepScrape (System.Diagnostics.Process process)
 		{
 			process.StartInfo.Arguments += string.Format(" --account_id=\"{0}\"", m_statementParameters.AccountID);
-			process.StartInfo.Arguments += string.Format(" --date_start={0}", m_statementParameters.DateStart.ToString("MM/dd/yyyy"));
-			process.StartInfo.Arguments += string.Format(" --date_end={0}", m_statementParameters.DateEnd.ToString("MM/dd/yyyy"));
+			process.StartInfo.Arguments += string.Format(" --date_start={0}", m_statementParameters.DateStart.ToString("yyyy-MM-dd"));
+			process.StartInfo.Arguments += string.Format(" --date_end={0}", m_statementParameters.DateEnd.ToString("yyyy-MM-dd"));
 		}
 
 		protected override DTO.ServiceResponse ProcessScrape (string outputPath, string debugID)

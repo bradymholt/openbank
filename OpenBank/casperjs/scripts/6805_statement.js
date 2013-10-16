@@ -2,7 +2,9 @@ phantom.injectJs('./scripts/6805.js');
 
 login();
 
-casper.thenClick('a[id=\"'+account_id+'\"]') ;
+casper.waitForSelector('a[id=\"'+account_id+'\"]', function(){
+	casper.thenClick('a[id=\"'+account_id+'\"]') ;
+});
 
 casper.thenClick('a[name="export_trans_nav_top"]') ;
 
@@ -13,12 +15,16 @@ casper.then(function() {
     });
 
 	console.log(download_form_action);
+
+	var startDate = date_start.substring(5,7) + "/" + date_start.substring(8,10) +  "/" + date_start.substring(0,4); //mm/dd/yyyy
+	var endDate = date_end.substring(5,7) + "/" + date_end.substring(8,10) +  "/" + date_end.substring(0,4); //mm/dd/yyyy
+	
     var base64contents = this.base64encode(download_form_action, 'POST', {
         selectedTransPeriod: '',
         downloadTransactionType: 'customRange',
         'searchBean.searchMoreOptionsPanelUsed': 'false',
-        'searchBean.timeFrameStartDate': date_start,
-        'searchBean.timeFrameEndDate': date_end,
+        'searchBean.timeFrameStartDate': startDate,
+        'searchBean.timeFrameEndDate': endDate,
         formatType: 'qfx'  
     });
 
