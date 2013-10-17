@@ -13,9 +13,19 @@ namespace OpenBank.FetchOfx
 {
 	public abstract class OfxFetcher
 	{
+		private string m_assemblyPath;
+		private string m_debugPath;
+		private string m_workingID;
+		private string m_debugWorkingPath;
+
 		public OfxFetcher (OfxFetchParameters parameters)
 		{
 			m_parameters = parameters;
+
+			m_assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			m_debugPath = Path.Combine(m_assemblyPath, "debug");
+			m_workingID = Guid.NewGuid ().ToString ();
+			m_debugWorkingPath = Path.Combine(m_debugPath, m_workingID);
 		}
 
 		private const string IDENTIFIER_CHARS_STRING = "0123456789";
@@ -72,12 +82,17 @@ namespace OpenBank.FetchOfx
 				};
 			} else {
 				try {
+					Directory.CreateDirectory (m_debugWorkingPath);
 
 					//request body
 					this.OfxRequestBody = this.BuildOfxRequest ();
 
+					File.WriteAllText (Path.Combine (m_debugWorkingPath, "request.ofx"), this.OfxRequestBody);
+
 					//get raw ofx response
 					this.OfxResponseBody = SendRequestAndGetResponse (this.OfxRequestBody, m_parameters.OFX_URL);
+
+					File.WriteAllText (Path.Combine (m_debugWorkingPath, "response.ofx"), this.OfxResponseBody);
 
 					//parse ofx to xml
 					Parse.OfxToXmlParser parser = new Parse.OfxToXmlParser (this.OfxResponseBody);
@@ -120,7 +135,12 @@ namespace OpenBank.FetchOfx
 				}
 			}
 
-			return !(this.Response is DTO.ResponseError);
+			bool isError = (this.Response is DTO.ResponseError);
+			if (!isError) {
+				Directory.Delete (m_debugWorkingPath, true);
+			} 
+
+			return isError;
 		}
 
 		protected string BuildOfxRequest ()

@@ -21,9 +21,9 @@ namespace OpenBank.FetchScrape
 		private string m_assemblyPath;
 		private string m_casperJsPath;
 		private string m_scriptsBasePath;
-		private string m_outputPath;
+		private string m_debugPath;
 		private string m_workingID;
-		private string m_workingOutputPath;
+		private string m_debugWorkingPath;
 		private string m_scriptPath;
 		private string m_outputData;
 		private string m_errorData;
@@ -36,9 +36,9 @@ namespace OpenBank.FetchScrape
 			m_casperJsPath = Path.Combine(m_assemblyPath, "casperjs");
 			m_scriptsBasePath = Path.Combine(m_assemblyPath, "casperjs/scripts");
 			m_scriptPath = Path.Combine (m_scriptsBasePath, GetScriptName (m_parameters.FID));
-			m_outputPath = Path.Combine(m_assemblyPath, "casperjs/output");
+			m_debugPath = Path.Combine(m_assemblyPath, "debug");
 			m_workingID = Guid.NewGuid ().ToString ();
-			m_workingOutputPath = Path.Combine(m_outputPath, m_workingID);
+			m_debugWorkingPath = Path.Combine(m_debugPath, m_workingID);
 		}
 
 		public DTO.ServiceResponse Response { get; set; }
@@ -57,7 +57,7 @@ namespace OpenBank.FetchScrape
 				};
 			} else {
 				try {
-					Directory.CreateDirectory (m_workingOutputPath);
+					Directory.CreateDirectory (m_debugWorkingPath);
 
 					if (!File.Exists (m_scriptPath)) {
 						throw new NotSupportedException (string.Format ("FID:{0} not supported", m_parameters.FID));
@@ -75,7 +75,7 @@ namespace OpenBank.FetchScrape
 					startInfo.Arguments += string.Format (" --user_id=\"{0}\"", m_parameters.UserID);
 					startInfo.Arguments += string.Format (" --password=\"{0}\"", m_parameters.Password);
 					startInfo.Arguments += string.Format (" --security_answers=\"{0}\"", m_parameters.SecurityAnswers);
-					startInfo.Arguments += string.Format (" --output_path=\"{0}\"", m_workingOutputPath);
+					startInfo.Arguments += string.Format (" --output_path=\"{0}\"", m_debugWorkingPath);
 
 					// Start the process with the info we specified.
 					// Call WaitForExit and then the using statement will close.
@@ -94,14 +94,14 @@ namespace OpenBank.FetchScrape
 						exeProcess.WaitForExit (MAX_WAIT_MILLISECONDS);
 					}
 
-					if (File.Exists (Path.Combine (m_workingOutputPath, "challenge_question.txt"))) {
-						string challengeQuestion = File.ReadAllText (Path.Combine (m_workingOutputPath, "challenge_question.txt"));
+					if (File.Exists (Path.Combine (m_debugWorkingPath, "challenge_question.txt"))) {
+						string challengeQuestion = File.ReadAllText (Path.Combine (m_debugWorkingPath, "challenge_question.txt"));
 						this.Response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
 							friendly_error = string.Concat ("The following security question was not answered correctly: ", challengeQuestion),
 							detailed_error = challengeQuestion
 						};
 					} else {
-						this.Response = ProcessScrape (m_workingOutputPath, m_workingID);
+						this.Response = ProcessScrape (m_debugWorkingPath, m_workingID);
 					}
 				} catch (NotSupportedException nex){
 					this.Response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
@@ -121,14 +121,15 @@ namespace OpenBank.FetchScrape
 				}
 			}
 
-			if (!(this.Response is DTO.ResponseError)) {
-				Directory.Delete (m_workingOutputPath, true);
-				return true;
+			bool isError = (this.Response is DTO.ResponseError);
+			if (isError) {
+				File.WriteAllText (Path.Combine (m_debugWorkingPath, "error.log"), m_errorData);
+				File.WriteAllText (Path.Combine (m_debugWorkingPath, "output.log"), m_outputData);
 			} else {
-				File.WriteAllText(Path.Combine(m_workingOutputPath, "error.log"), m_errorData);
-				File.WriteAllText(Path.Combine(m_workingOutputPath, "output.log"), m_outputData);
-				return false;
+				Directory.Delete (m_debugWorkingPath, true);
 			}
+
+			return isError;
 		}
 
 		void exeProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
