@@ -137,7 +137,9 @@ namespace OpenBank.FetchOfx
 
 			bool isError = (this.Response is DTO.ResponseError);
 			if (!isError) {
-				Directory.Delete (m_debugWorkingPath, true);
+				if (ConfigurationManager.AppSettings["keep_scrape_debug_output"] == "false") {
+					Directory.Delete (m_debugWorkingPath, true);
+				}
 			} 
 
 			return isError;

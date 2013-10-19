@@ -15,7 +15,7 @@ namespace OpenBank.FetchScrape
 {
 	public abstract class ScrapeFetcher
 	{
-		private const int MAX_WAIT_MILLISECONDS = 15000; //15 seconds
+		private const int MAX_WAIT_MILLISECONDS = 60000; //60 seconds
 
 		private ScrapeFetchParameters m_parameters;
 		private string m_assemblyPath;
@@ -126,7 +126,9 @@ namespace OpenBank.FetchScrape
 				File.WriteAllText (Path.Combine (m_debugWorkingPath, "error.log"), m_errorData);
 				File.WriteAllText (Path.Combine (m_debugWorkingPath, "output.log"), m_outputData);
 			} else {
-				Directory.Delete (m_debugWorkingPath, true);
+				if (ConfigurationManager.AppSettings["keep_scrape_debug_output"] == "false") {
+					Directory.Delete (m_debugWorkingPath, true);
+				}
 			}
 
 			return isError;
