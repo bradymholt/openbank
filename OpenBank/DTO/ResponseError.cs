@@ -11,6 +11,7 @@ namespace OpenBank.DTO
 
 		public string detailed_error {get;set;}
 		public string friendly_error {get;set;}
+		public bool is_security_question_asked {get;set;}
 	}
 }
 

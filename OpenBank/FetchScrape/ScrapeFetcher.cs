@@ -97,8 +97,9 @@ namespace OpenBank.FetchScrape
 					if (File.Exists (Path.Combine (m_debugWorkingPath, "challenge_question.txt"))) {
 						string challengeQuestion = File.ReadAllText (Path.Combine (m_debugWorkingPath, "challenge_question.txt"));
 						this.Response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
-							friendly_error = string.Concat ("The following security question was not answered correctly: ", challengeQuestion),
-							detailed_error = challengeQuestion
+							friendly_error = string.Concat ("The following security question was asked: ", challengeQuestion),
+							detailed_error = challengeQuestion,
+							is_security_question_asked =  true
 						};
 					} else {
 						this.Response = ProcessScrape (m_debugWorkingPath, m_workingID);
