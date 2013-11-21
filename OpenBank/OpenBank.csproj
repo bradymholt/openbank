@@ -180,6 +180,9 @@
     <None Include="casperjs\scripts\6812.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="casperjs\scripts\3000_accounts.js" />
+    <None Include="casperjs\scripts\3000_statement.js" />
+    <None Include="casperjs\scripts\3000.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\default.cshtml">

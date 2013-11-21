@@ -63,6 +63,9 @@ namespace OpenBank.FetchScrape
 						throw new NotSupportedException (string.Format ("FID:{0} not supported", m_parameters.FID));
 					}
 
+					//Will execute command in format:
+					//  phantomjs scripts/3000_accounts.js ~/dev/OpenBank/OpenBank/casperjs --user_id="bmholt"
+
 					ProcessStartInfo startInfo = new ProcessStartInfo ();
 					startInfo.FileName = ConfigurationManager.AppSettings ["phantomjs_path"];
 					startInfo.UseShellExecute = false;
