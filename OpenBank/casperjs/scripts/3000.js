@@ -8,4 +8,15 @@ function login() {
 	    password: password
 	  }, true);
 	});
+
+	casper.waitForSelector('body', function() {
+	  this.echo("splash screen bypass...");
+	  splash_exists = this.evaluate(function() {
+	    return __utils__.exists('#online_wellsfargo_com_splash');
+	  });
+	  
+	  if (splash_exists) {
+	  	this.click('input.secondary'); //"No Thanks"
+	  }
+	});
 }
