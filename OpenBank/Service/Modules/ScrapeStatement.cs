@@ -11,6 +11,8 @@ namespace OpenBank.Service.Module
 {
 	public class ScrapeStatement : NancyModule
 	{
+		private static NLog.Logger s_logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public ScrapeStatement()
 		{
 			Post["/scrape/statement"] = parameters =>
@@ -29,7 +31,13 @@ namespace OpenBank.Service.Module
 				};
 
 				var fetcher = new FetchScrape.ScrapeStatementFetcher(requestParameters);
-				fetcher.Fetch();
+
+				try {
+					fetcher.Fetch();
+				} catch(Exception ex) {
+					s_logger.ErrorException("Error on /scrape/statement", ex);
+					throw;
+				}
 
 				return Negotiate
 				.WithModel(fetcher.Response)

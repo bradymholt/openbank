@@ -11,6 +11,8 @@ namespace OpenBank.Service.Module
 {
     public class Statement : NancyModule
     {
+		private static NLog.Logger s_logger = NLog.LogManager.GetCurrentClassLogger();
+
         public Statement()
         {
 			Post["/ofx/statement"] = parameters =>
@@ -32,7 +34,13 @@ namespace OpenBank.Service.Module
                 };
 
 				var fetcher = new FetchOfx.OfxStatementFetcher(requestParameters);
-				fetcher.Fetch();
+
+				try {
+					fetcher.Fetch();
+				} catch(Exception ex) {
+					s_logger.ErrorException("Error on /ofx/statements", ex);
+					throw;
+				}
 
 				return Negotiate
 					.WithModel(fetcher.Response)

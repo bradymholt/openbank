@@ -10,6 +10,8 @@ namespace OpenBank.Service.Module
 {
 	public class Accounts : NancyModule
 	{
+		private static NLog.Logger s_logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public Accounts ()
 		{
 			//wget --header="Accept: application/json" --post-data="ofx_url=https://ofx.bankofamerica.com/cgi-forte/fortecgi?servicename=ofx_2-3%26pagename=ofx&fid=6812&org=HAN&user_id=user&password=pass" http://localhost:1234/accounts
@@ -25,7 +27,13 @@ namespace OpenBank.Service.Module
 				};
 
 				var fetcher = new FetchOfx.OfxAccountsFetcher (requestParameters);
-				fetcher.Fetch();
+
+				try {
+					fetcher.Fetch();
+				} catch(Exception ex) {
+					s_logger.ErrorException("Error on /ofx/accounts", ex);
+					throw;
+				}
 
 				return Negotiate
 					.WithModel(fetcher.Response)
