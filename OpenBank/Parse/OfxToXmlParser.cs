@@ -11,7 +11,7 @@ namespace OpenBank.Parse
 	public class OfxToXmlParser
 	{
 		private const string STATUS_CODE_SUCCESS = "0";
-
+		private static NLog.Logger s_logger = NLog.LogManager.GetCurrentClassLogger();
 		private string m_rawOfx;
 
 		public OfxToXmlParser (string rawOfx)
@@ -35,7 +35,7 @@ namespace OpenBank.Parse
 
 				// add additional returns to allow for parsing
 				// ofx files that are all on one line
-				string data = m_rawOfx.Replace ("<", "\n\r<");
+				string data = m_rawOfx.Replace ("<", "\n\r<").Replace("\t", string.Empty);
 
 				string[] lines = data.Split (
 					new string[] { "\n", "\r" },
@@ -45,7 +45,7 @@ namespace OpenBank.Parse
 				bool isStatusLine = false;
 				foreach (string line in lines) {
 					if (line.Contains ("<STATUS>") || line.Contains ("</STATUS>") || isStatusLine) {
-						if (!line.Contains ("</STATUS>")) {
+						if (!string.IsNullOrEmpty(line) && !line.Contains ("</STATUS>")) {
 							statusTags.Add (line);
 						}
 
@@ -195,6 +195,7 @@ namespace OpenBank.Parse
 			} catch (OfxParseException) {
 				throw;
 			} catch (Exception ex) {
+				s_logger.DebugException("Error parsing OFX", ex);
 				throw new OfxParseException (ex.Message, ex);
 			}
 

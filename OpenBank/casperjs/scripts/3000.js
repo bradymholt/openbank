@@ -9,13 +9,18 @@ function login() {
 	  }, true);
 	});
 
+	casper.wait(1000, function() {
+    	//allow time for login redirect
+	});
+
 	casper.waitForSelector('body', function() {
-	  this.echo("splash screen bypass...");
+	  this.echo("splash screen check...");
 	  splash_exists = this.evaluate(function() {
 	    return __utils__.exists('#online_wellsfargo_com_splash');
 	  });
 	  
 	  if (splash_exists) {
+	   this.echo("splash screen bypass...");
 	  	this.click('input.secondary'); //"No Thanks"
 	  }
 	});
