@@ -1,3 +1,5 @@
+//Bank of America
+
 phantom.injectJs('./scripts/common.js');
 
 function login() {

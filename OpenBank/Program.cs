@@ -11,6 +11,7 @@ namespace OpenBank
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("--Welcome to OpenBank--");
             Console.WriteLine();
 			Console.Write("Starting up...");

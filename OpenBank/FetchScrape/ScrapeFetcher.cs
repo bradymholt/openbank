@@ -126,13 +126,11 @@ namespace OpenBank.FetchScrape
 			}
 
 			bool isError = (this.Response is DTO.ResponseError);
-			if (isError) {
+			if (isError || ConfigurationManager.AppSettings ["keep_scrape_debug_output"] == "true") {
 				File.WriteAllText (Path.Combine (m_debugWorkingPath, "error.log"), m_errorData);
 				File.WriteAllText (Path.Combine (m_debugWorkingPath, "output.log"), m_outputData);
 			} else {
-				if (ConfigurationManager.AppSettings["keep_scrape_debug_output"] == "false") {
-					Directory.Delete (m_debugWorkingPath, true);
-				}
+				Directory.Delete (m_debugWorkingPath, true);
 			}
 
 			return isError;

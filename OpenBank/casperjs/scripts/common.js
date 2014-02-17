@@ -15,7 +15,8 @@ var casper = require('casper').create({
 
 var user_id = casper.cli.get("user_id");
 var password = casper.cli.get("password");
-var security_answers = (casper.cli.get("security_answers") || "").split();
+var security_answers = casper.cli.raw.get("security_answers");
+    console.log(security_answers);
 var account_id = casper.cli.get("account_id");
 var date_start = casper.cli.get("date_start"); //YYYY-MM-DD format
 var date_end = casper.cli.get("date_end");     //YYYY-MM-DD format

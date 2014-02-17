@@ -165,33 +165,6 @@
     <None Include="casperjs\modules\xunit.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="casperjs\scripts\1601_statement.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\common.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\6812_accounts.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\6812_statement.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\6812.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\3000_accounts.js">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\3000_statement.js">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="casperjs\scripts\3000.js">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\default.cshtml">
@@ -217,5 +190,29 @@
     <Folder Include="Attributes\" />
     <Folder Include="Parse\" />
     <Folder Include="FetchOfx\Exception\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="casperjs\scripts\10898_statement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="casperjs\scripts\common.js" />
+    <Content Include="casperjs\scripts\6812_accounts.js" />
+    <Content Include="casperjs\scripts\6812_statement.js" />
+    <Content Include="casperjs\scripts\6812.js" />
+    <Content Include="casperjs\scripts\3000_accounts.js">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="casperjs\scripts\3000_statement.js">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="casperjs\scripts\3000.js">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="casperjs\scripts\10898.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="casperjs\scripts\10898_accounts.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
