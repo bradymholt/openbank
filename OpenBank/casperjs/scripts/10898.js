@@ -57,15 +57,15 @@ function login() {
 	    else {
 	    	this.click("#ancHavActivationCode");
 
+	    	casper.wait(2000, function() {
+				//allow time redirect
+		  	});
+
 	    	casper.waitForSelector('body', function() {
 		    	this.fill('#frmValidateOTP', {
 				   	 "usrCtrlOtp$txtActivationCode": security_answers,
 				   	 "usrCtrlOtp$txtPassword": password
 					}, false);
-			});
-
-			casper.then(function() {
-				this.click("#NextButton");
 			});
 	    }
 	  }
