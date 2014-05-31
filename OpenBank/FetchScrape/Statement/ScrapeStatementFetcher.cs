@@ -41,7 +41,7 @@ namespace OpenBank.FetchScrape
 		{
 			DTO.ServiceResponse response = null;
 			string statementFilePath = Path.Combine (outputPath, "statement.qfx");
-			string noStatementFilePath = Path.Combine (outputPath, "no_statement.txt");
+			string noStatementFilePath = Path.Combine (outputPath, "empty_statement.txt");
 			if (File.Exists (statementFilePath)) {
 				string statementOfx = File.ReadAllText (statementFilePath);
 				Parse.OfxToXmlParser parser = new Parse.OfxToXmlParser (statementOfx);

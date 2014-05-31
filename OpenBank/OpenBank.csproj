@@ -12,8 +12,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -194,18 +192,29 @@
     <Content Include="casperjs\scripts\10898_statement.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="casperjs\scripts\common.js" />
-    <Content Include="casperjs\scripts\6812_accounts.js" />
-    <Content Include="casperjs\scripts\6812_statement.js" />
-    <Content Include="casperjs\scripts\6812.js" />
+    <Content Include="casperjs\scripts\common.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="casperjs\scripts\6812_accounts.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="casperjs\scripts\6812_statement.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="casperjs\scripts\6812.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="casperjs\scripts\3000_accounts.js">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="casperjs\scripts\3000_statement.js">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="casperjs\scripts\3000.js">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="casperjs\scripts\10898.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
