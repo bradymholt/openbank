@@ -28,8 +28,12 @@ casper.then(function() {
         formatType: 'qfx'  
     });
 
-    var data = decode_base64(base64contents) ;
-    fs.write(output_path + 'statement.qfx', data, 'w');
+    var data = decode_base64(base64contents);
+    if (data.indexOf("requested to download has no posted transactions") > -1){
+    	fs.write(output_path + 'empty_statement.txt', data, 'w');
+    } else {
+		fs.write(output_path + 'statement.qfx', data, 'w');
+	}
 });
 
 casper.run();

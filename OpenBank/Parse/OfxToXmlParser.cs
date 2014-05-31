@@ -62,6 +62,10 @@ namespace OpenBank.Parse
 					|| line.Contains ("<BALAMT>")
                               select line;
 
+				if (balanceTags.Count() == 0){
+					throw new OfxParseException("No balance tags found.");
+				}
+
 				List<string> transactionTags = new List<string> ();
 				bool isTransactionLine = false;
 				foreach (string line in lines) {

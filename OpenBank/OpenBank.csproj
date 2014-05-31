@@ -189,7 +189,6 @@
     <Folder Include="FetchScrape\Accounts\" />
     <Folder Include="Attributes\" />
     <Folder Include="Parse\" />
-    <Folder Include="FetchOfx\Exception\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="casperjs\scripts\10898_statement.js">

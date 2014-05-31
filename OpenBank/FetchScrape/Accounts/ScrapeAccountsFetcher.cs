@@ -37,7 +37,12 @@ namespace OpenBank.FetchScrape
 			if (File.Exists(accountsFilePath)) {
 				string accountJson = File.ReadAllText(accountsFilePath);
 				response = new DTO.AccountsResponse ();
-				((DTO.AccountsResponse)response).accounts = JsonConvert.DeserializeObject<List<DTO.Account>> (accountJson);
+				var accounts = JsonConvert.DeserializeObject<List<DTO.Account>> (accountJson);
+				if (accounts != null && accounts.Count () > 0) {
+					((DTO.AccountsResponse)response).accounts = accounts;
+				} else {
+					throw new Exception ("No accounts found.");
+				}
 			} else {
 				response = new DTO.ResponseError (HttpStatusCode.BadRequest) {
 					friendly_error = "An error occured when atempting to get list of accounts.",

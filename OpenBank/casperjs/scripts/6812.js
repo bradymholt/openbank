@@ -44,4 +44,8 @@ function login() {
 	    password: password
 	  }, true);
 	});
+
+	casper.wait(2000, function() {
+    	//allow time for redirect
+	});
 }

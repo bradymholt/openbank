@@ -1,0 +1,55 @@
+<!-- https://mfasa.chase.com/auth/auth-stoken-osl.html?auth_deviceCookie=adtoken.chase.com&auth_redirecturl=https%3A%2F%2Fchaseonline.chase.com%2FSecure%2FOSL.aspx%3Fnewstoken%3Dfalse%26LOB%3DCOLLogon%26Referer%3Dhttps%253A%252F%252Fchaseonline.chase.com%252FLogon.aspx%26resId%3Dsuccess%26& -->
+
+
+<div id="flashcontent"></div>
+<script language="javascript" type="text/javascript">
+	var sURL = window.location.toString();
+	document.domain = getDocumentDomain();
+	var so = new SWFObject("device.swf","cookiemanager","0","0","6","#ffffff");
+	so.addParam("allowScriptAccess","sameDomain");
+	so.write("flashcontent");
+	var isRedirected = false;
+	function dflash() {
+		var ckname = getQueryStrParam("auth_deviceCookie=");
+		var cvalue = getDocumentCookie(ckname);
+		if (cvalue == null || cvalue == "" || cvalue == "undefined") cvalue = "";
+		setFlashCookie(deviceCookie(), cvalue, dredirect);
+	}
+	function dredirect() {
+		if(!isRedirected){
+			isRedirected = true;
+			window.location = getRedirectURL();
+		}
+	}
+	function getQueryStrParam(paramName) {
+		var queryString = window.top.location.search.substring(1);
+		begin = queryString.indexOf(paramName);
+		if (begin != -1) {
+			begin += paramName.length;
+			end = queryString.indexOf ("&" , begin);
+			if (end == -1) end = queryString.length;
+			return unescape(queryString.substring(begin, end));
+		}
+		else
+			return "";
+	}
+	function refresh() {
+ 		window.location = sURL;
+	}
+	function getRedirectURL() {
+		var rURL = getQueryStrParam("auth_redirecturl=");
+		var d = rURL.split(/\/+/g)[1];
+		if (d.indexOf(".") > -1) {
+			var end = d.substring(d.lastIndexOf("."), d.length);
+			d = d.substring(0, d.lastIndexOf("."));
+			d = d.substring(d.lastIndexOf(".") + 1, d.length);
+			d = d + end;
+		}
+		if(d == getDocumentDomain())
+			return rURL;
+		else
+			return "";
+	}
+</script>
+
+
