@@ -61,11 +61,16 @@ function login() {
 				//allow time redirect
 		  	});
 
-	    	casper.waitForSelector('body', function() {
+	    	casper.waitForSelector('#frmValidateOTP', function() {
 		    	this.fill('#frmValidateOTP', {
 				   	 "usrCtrlOtp$txtActivationCode": security_answers,
 				   	 "usrCtrlOtp$txtPassword": password
 					}, false);
+			});
+
+			casper.then(function() {
+				this.echo('submit security code...');
+				this.click("#NextButton");
 			});
 	    }
 	  }

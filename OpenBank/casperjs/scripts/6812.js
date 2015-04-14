@@ -45,7 +45,7 @@ function login() {
 	  }, true);
 	});
 
-	casper.wait(2000, function() {
+	casper.wait(5000, function() {
     	//allow time for redirect
 	});
 }

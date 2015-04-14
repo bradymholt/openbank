@@ -37,7 +37,8 @@ namespace OpenBank.FetchScrape
 			m_scriptsBasePath = Path.Combine(m_assemblyPath, "casperjs/scripts");
 			m_scriptPath = Path.Combine (m_scriptsBasePath, GetScriptName (m_parameters.FID));
 			m_debugPath = Path.Combine(m_assemblyPath, "debug");
-			m_workingID = Guid.NewGuid ().ToString ();
+			int epocTime = ((int)(DateTime.UtcNow - new DateTime (1970, 1, 1)).TotalSeconds); 
+			m_workingID = epocTime.ToString();
 			m_debugWorkingPath = Path.Combine(m_debugPath, m_workingID);
 		}
 
@@ -73,8 +74,8 @@ namespace OpenBank.FetchScrape
 					startInfo.RedirectStandardOutput = true;
 					startInfo.RedirectStandardError = true;
 					startInfo.WorkingDirectory = m_casperJsPath;
-					startInfo.Arguments = m_scriptPath;
-					startInfo.Arguments += string.Format (" {0}", m_casperJsPath);
+					startInfo.Arguments = "--ssl-protocol=any";
+					startInfo.Arguments += string.Format (" {0} {1}", m_scriptPath, m_casperJsPath);
 					startInfo.Arguments += string.Format (" --user_id=\"{0}\"", m_parameters.UserID);
 					startInfo.Arguments += string.Format (" --password=\"{0}\"", m_parameters.Password);
 					startInfo.Arguments += string.Format (" --security_answers=\"{0}\"", m_parameters.SecurityAnswers);
